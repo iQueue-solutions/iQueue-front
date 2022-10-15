@@ -1,9 +1,13 @@
-const QueueCreationForm = ({icon}) => {
+import Input from "./Input";
+import {CalendarIcon} from "@heroicons/react/outline";
+
+const QueueCreationForm = () => {
+  const calendarIcon = <CalendarIcon className='w-5 md:w-6 mr-2' />;
   return (
     <form className="w-1/4 mt-24">
-      <div className="border-2 border-slate-400 p-2 rounded-lg mb-10"><input type="text" placeholder="Назва" className="bg-transparent focus:outline-none w-full" /></div>
-      <div className="border-2 border-slate-400 p-2 rounded-lg mb-6 flex">{icon}<input type="text" placeholder="Початок запису в чергу" className="bg-transparent focus:outline-none w-full" /></div>
-      <div className="border-2 border-slate-400 p-2 rounded-lg mb-6 flex">{icon}<input type="text" placeholder="Кінець запису в чергу" className="bg-transparent focus:outline-none w-full" /></div>
+      <Input placeholder="Назва" />
+      <Input icon={calendarIcon} placeholder="Початок запису в чергу" />
+      <Input icon={calendarIcon} placeholder="Кінець запису в чергу" />
     </form>
   )
 }

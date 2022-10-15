@@ -1,19 +1,7 @@
-const styles = [
-  'btn--orange--solid',
-  'btn--orange--outline',
-  'btn--blue--solid',
-  'btn--blue--outline',
-  'btn--green--solid',
-  'btn--green--outline',
-  'btn--red--solid',
-  'btn--red--outline',
-];
-
-const Button = ({text, style, onClick, icon}) => {
-  const checkBtnStyle = styles.includes(style) ? style : styles[0]; 
+const Button = ({color = 'orange', variant = 'solid', onClick, icon, children}) => {
   return (
-    <button onClick={onClick} className={`flex ${checkBtnStyle}`} >
-      {text}
+    <button onClick={onClick} className={`flex btn--${color}--${variant}`} >
+      {children}
       {icon}
     </button>
   )
