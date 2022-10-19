@@ -1,8 +1,10 @@
-export const Button = ({color = 'orange', variant = 'solid', onClick, icon, children}) => {
+import styles from './Button.module.css'
+
+export const Button = ({color, variant, onClick, icon, children}) => {
   return (
-    <button onClick={onClick} className={`flex btn--${color}--${variant}`} >
+    <button onClick={onClick} className={`flex mt-20 ${styles.btn} ${styles[color]} ${styles[variant]}`} >
       {children}
-      {icon}
+      <span className='ml-5'>{icon}</span>
     </button>
   )
 }

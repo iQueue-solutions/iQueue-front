@@ -1,0 +1,18 @@
+@tailwind components;
+@layer components {
+  .btn{
+    @apply active:bg-slate-50 md:text-base md:p-3 font-bold border-2 p-1 rounded-md to-transparent transition;
+  }
+  .orange{
+    @apply bg-amber-500 border-amber-500 hover:text-amber-500 text-amber-500 hover:bg-amber-500;
+  }
+  .purple{
+    @apply bg-purple-800 border-purple-800 hover:text-purple-800 text-purple-800 hover:bg-purple-800;
+  }
+  .solid{
+    @apply text-slate-50 hover:bg-transparent;
+  }
+  .outline{
+    @apply bg-transparent hover:text-slate-50;
+  }
+}

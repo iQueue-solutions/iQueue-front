@@ -9,7 +9,7 @@ const CreateQueue = () => (
     <Heading>Створення</Heading>
     <QueueCreationForm />
     <DropdownInput icon={<ChevronDownIcon className='w-5' />} title="Кількість учасників - " />
-    <Button icon={<ChevronRightIcon className='w-5 md:w-6' />} variant="outline">Створити чергу</Button>
+    <Button icon={<ChevronRightIcon className='w-5 md:w-6' />} color="purple" variant="solid">Створити чергу</Button>
   </div>
 );
 

@@ -18,7 +18,9 @@ export const DropdownInput = ({ icon, title }) => {
     </div>
     {icon}
    </div>
-   {open && <Input handleInput={handleInput} placeholder="Кількість" />}
+   <div className="absolute w-1/4">
+    {open && <Input handleInput={handleInput} placeholder="Кількість" />}
+   </div>
   </div>
  );
 };
