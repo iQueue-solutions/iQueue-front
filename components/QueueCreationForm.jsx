@@ -1,7 +1,7 @@
-import Input from "./Input";
+import {Input} from "./Input";
 import {CalendarIcon} from "@heroicons/react/outline";
 
-const QueueCreationForm = () => {
+export const QueueCreationForm = () => {
   const calendarIcon = <CalendarIcon className='w-5 md:w-6 mr-2' />;
   return (
     <form className="w-1/4 mt-24">
@@ -12,5 +12,3 @@ const QueueCreationForm = () => {
   )
 }
 
-
-export default QueueCreationForm;

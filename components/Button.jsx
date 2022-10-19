@@ -1,4 +1,4 @@
-const Button = ({color = 'orange', variant = 'solid', onClick, icon, children}) => {
+export const Button = ({color = 'orange', variant = 'solid', onClick, icon, children}) => {
   return (
     <button onClick={onClick} className={`flex btn--${color}--${variant}`} >
       {children}
@@ -6,5 +6,3 @@ const Button = ({color = 'orange', variant = 'solid', onClick, icon, children}) 
     </button>
   )
 }
-
-export default Button;
