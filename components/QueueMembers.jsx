@@ -1,6 +1,6 @@
 import QueueMember from "../components/QueueMember";
 
-const QueueParticipants = () => (
+export const QueueMembers = () => (
  <>
   <QueueMember
    variant="stranger-out"
@@ -19,4 +19,3 @@ const QueueParticipants = () => (
   <QueueMember variant="entry" />
  </>
 );
-export default QueueParticipants;

@@ -1,15 +1,15 @@
 import Heading from "../components/Heading";
-import ShareQueue from "../components/ShareQueue";
-import QueueCreator from "../components/QueueCreator";
+import { ShareQueue } from "./ShareQueue";
+import { QueueCreator } from "./QueueCreator";
 
-const QueueListHeading = ({ queuename, queuecreator }) => {
+const QueueListHeading = ({ queueName, queueCreator }) => {
  return (
   <div className="mb-12">
    <div className="flex justify-center">
-    <Heading>{queuename}</Heading>
+    <Heading>{queueName}</Heading>
     <ShareQueue />
    </div>
-   <QueueCreator className="justify-self-start">{queuecreator}</QueueCreator>
+   <QueueCreator>{queueCreator}</QueueCreator>
   </div>
  );
 };

@@ -1,7 +1,7 @@
 import { XIcon, CheckIcon, PlusIcon } from "@heroicons/react/outline";
 
 const QueueMember = ({ number, name, work, variant }) => {
- if (variant == "stranger-out") {
+ if (variant === "stranger-out") {
   return (
    <div className="w-full bg-slate-400 h-[100px] rounded-xl mb-3">
     <div className="flex justify-between px-5 py-3 font-semibold">
@@ -14,7 +14,7 @@ const QueueMember = ({ number, name, work, variant }) => {
   );
  }
 
- if (variant == "stranger-in") {
+ if (variant === "stranger-in") {
   return (
    <div className="w-full bg-slate-400 h-[100px] rounded-xl mb-3">
     <div className="flex justify-between px-5 py-3 font-semibold">
@@ -45,7 +45,7 @@ const QueueMember = ({ number, name, work, variant }) => {
   );
  }
 
- if (variant == "me") {
+ if (variant === "me") {
   return (
    <div className="w-full bg-slate-400 h-[100px] rounded-xl mb-3 border-4 border-solid border-yellow-400">
     <div className="flex justify-between px-5 py-3 font-semibold">
@@ -63,7 +63,7 @@ const QueueMember = ({ number, name, work, variant }) => {
   );
  }
 
- if (variant == "empty") {
+ if (variant === "empty") {
   return (
    <div className="w-full cursor-pointer bg-slate-300 h-[100px] rounded-xl mb-3 hover:bg-slate-400 transition">
     <div className="flex justify-between px-5 py-3 font-semibold">
@@ -76,16 +76,16 @@ const QueueMember = ({ number, name, work, variant }) => {
   );
  }
 
- if (variant == "entry") {
+ if (variant === "entry") {
   return (
    <div className="w-full bg-amber-200 h-[100px] rounded-xl mb-3">
     <div className="flex flex-col items-center px-5 py-3 font-semibold">
      <h1 className="text-2xl">Зайняти це місце?</h1>
      <div className="flex">
-      <button className="m-3 px-10 py-1 rounded-lg hover:bg-green-300 transition">
+      <button className="m-3 px-10 py-1 rounded-lg bg-green-300 transition hover:border-2 hover:border-green-400">
        <CheckIcon className="w-6" />
       </button>
-      <button className="m-3 px-10 py-1 rounded-lg hover:bg-red-300 transition">
+      <button className="m-3 px-10 py-1 rounded-lg bg-red-300 transition hover:border-2 hover:border-red-500">
        <XIcon className="w-6" />
       </button>
      </div>
