@@ -3,60 +3,50 @@ import {ConfirmQueueMember} from "./ConfirmQueueMember";
 import {useState} from "react";
 
 export const QueueMembers = () => {
-  const TakePlace = (id, placeNumber) => {
+  const takePlace = (id, placeNumber) => {
+    setIsConfirmActive(true);
+    setConfirmTitle(`Зайняти місце ${placeNumber} ?`);
+  }
+
+  const swapPlaces = (id, name) => {
     setIsConfirmActive(true)
-    setConfirmTitle(confirmTitle = `Зайняти місце ${placeNumber} ?`)
+    setConfirmTitle(`Помінятись місцями з ${name} ?`);
   }
 
-  const SwapPlaces = (id, name) => {
-    setIsConfirmActive(true)
-    setConfirmTitle(confirmTitle = `Помінятись місцями з ${name} ?`)
+  const freePlace = () => {
+    setIsConfirmActive(true);
+    setConfirmTitle("Залишити чергу?");
   }
 
-  const FreePlace = (id) => {
-    setIsConfirmActive(true)
-    setConfirmTitle(confirmTitle = "Залишити чергу?")
-  }
+  const confirm = () => setConfirmTitle("Okay");
+  const cancel = () => setIsConfirmActive(false);
 
-  const Confirm = () => {
-    setConfirmTitle("Okay")
-  }
+  const [isConfirmActive, setIsConfirmActive] = useState(false);
+  const [confirmTitle, setConfirmTitle] = useState("");
 
-  const Cancel = () => {
-    setIsConfirmActive(false)
-  }
-
-  let [isConfirmActive, setIsConfirmActive] = useState(false);
-  let [confirmTitle, setConfirmTitle] = useState("");
-
-  let members = [{
-    id: 0, variant: "stranger-out", number: "#1", name: "Спектров Денис", work: "ПЗ2",
-  }, {
-    id: 1, variant: "stranger-in", number: "#2", name: "Спектров Денис", work: "ПЗ2", callback: SwapPlaces
-  }, {
-    id: 2, variant: "empty", number: "#3", callback: TakePlace
-  }, {
-    id: 3, variant: "me", number: "#4", name: "Спектров Денис", work: "ПЗ2", callback: FreePlace
-  }]
-
-  let membersComp = members.map(({
-                                   id,
-                                   variant,
-                                   number,
-                                   name,
-                                   work,
-                                   callback
-                                 }) => (// eslint-disable-next-line react/jsx-key
-    <QueueMember id={id} variant={variant} number={number} name={name} work={work} callback={callback}/>))
-
-  if (!isConfirmActive) {
-    return <>
-      {membersComp}
-    </>
-  }
+  const [mockResponse] = useState( {
+    me: 'Спектров Денис',
+    isInQueue: true,
+    members: [
+      { id: 0, isEmpty: false, name: "Дмитро Донець", work: "ПЗ2", },
+      { id: 1, isEmpty: false, name: "Овчаренко Михайло", work: "ПЗ2", callback: swapPlaces },
+      { id: 2, isEmpty: true, callback: takePlace },
+      { id: 3, isEmpty: false, name: "Спектров Денис", work: "ПЗ2", callback: freePlace },
+    ],
+  });
 
   return <>
-    {membersComp}
-    <ConfirmQueueMember confirmCallback={Confirm} cancelCallback={Cancel} title={confirmTitle}/>
+    {mockResponse.members.map(({ id, isEmpty, name, work, callback }) => {
+      const variant = {
+        isMe: name === mockResponse.me,
+        isInQueue: mockResponse.isInQueue,
+        isEmpty
+      };
+      return <QueueMember key={id} id={id} variant={variant} name={name} work={work} callback={callback} />;
+    }
+    )}
+    {isConfirmActive &&
+      <ConfirmQueueMember confirmCallback={confirm} cancelCallback={cancel} title={confirmTitle} />
+    }
   </>
 };
