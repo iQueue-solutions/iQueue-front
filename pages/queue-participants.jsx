@@ -1,4 +1,4 @@
-import QueueListHeading from "../components/QueueListHeading";
+import { QueueListHeading } from "../components/QueueListHeading";
 import { QueueMembers } from "../components/QueueMembers";
 
 const QueueParticipants = () => (
