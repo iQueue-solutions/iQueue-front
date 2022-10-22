@@ -1,14 +1,25 @@
 import { XIcon, PlusIcon } from "@heroicons/react/outline";
 import { Button } from "./Button";
 import { Swap } from "./Icons";
+import {useState} from "react";
+import {ConfirmQueueMember} from "./ConfirmQueueMember";
 
-const SwapPlaces = ({
+const OccupiedPlace = ({
  id,
  variant: { isMe, isInQueue },
  name,
  work,
  callback,
 }) => {
+ const [isQuestion, setIsQuestion] = useState(false);
+ const [question] = useState(isMe ? "Залишити чергу?" : `Помінятись місцями з ${name} ?`);
+
+ const openQuestion = () => setIsQuestion(true);
+ const closeQuestion = () => setIsQuestion(false);
+
+ if (isQuestion)
+  return <ConfirmQueueMember title={question} onConfirm={() => callback(id)} onCancel={closeQuestion} />
+
  return (
   <div
    className={`w-full bg-slate-400 h-[100px] rounded-xl mb-3 ${
@@ -23,7 +34,7 @@ const SwapPlaces = ({
      <h2 className="text-xl">{work}</h2>
      {isInQueue && (
       <button
-       onClick={() => callback(id, name)}
+       onClick={openQuestion}
        className="bg-slate-300 rounded-md px-1.5 ml-3 mt-[-5px] hover:bg-slate-400 transition"
       >
        {isMe ? <XIcon className="w-6" /> : <Swap />}
@@ -50,11 +61,11 @@ const EmptyPlace = ({ id, callback }) => {
  );
 };
 
-export const QueueMember = ({ id, variant, name, work, callback }) => {
+export const QueueMember = ({ id, variant, name, work, callback = () => console.warn('[QueueMember] Empty callback') }) => {
  return (
   <>
    {!variant.isEmpty ? (
-    <SwapPlaces
+    <OccupiedPlace
      id={id}
      variant={variant}
      name={name}

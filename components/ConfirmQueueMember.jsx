@@ -2,8 +2,8 @@ import { CheckIcon, XIcon } from "@heroicons/react/outline";
 
 export const ConfirmQueueMember = ({
  title,
- confirmCallback,
- cancelCallback,
+ onConfirm,
+ onCancel,
 }) => {
  return (
   <div className="w-full bg-amber-200 h-[100px] rounded-xl mb-3">
@@ -11,13 +11,13 @@ export const ConfirmQueueMember = ({
     <h1 className="text-2xl">{title}</h1>
     <div className="flex">
      <button
-      onClick={confirmCallback}
+      onClick={onConfirm}
       className="m-3 px-10 py-1 rounded-lg bg-green-300 transition border-[3px] border-transparent hover:border-green-400"
      >
       <CheckIcon className="w-6" />
      </button>
      <button
-      onClick={cancelCallback}
+      onClick={onCancel}
       className="m-3 px-10 py-1 rounded-lg bg-red-300 transition border-[3px] border-transparent hover:border-red-500"
      >
       <XIcon className="w-6" />
