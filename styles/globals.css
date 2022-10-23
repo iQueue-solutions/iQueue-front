@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+ .cont-size {
+  height: calc(100vh - 11rem);
+ }
+}
+
 html,
 body {
  padding: 0;
