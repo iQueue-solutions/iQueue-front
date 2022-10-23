@@ -3,9 +3,9 @@ import { Footer } from "./Footer";
 
 export default function Layout({ children }) {
  return (
-  <>
-   <main>{children}</main>
+  <div className="flex flex-col">
+   <main className="overflow-x-hidden">{children}</main>
    <Footer></Footer>
-  </>
+  </div>
  );
 }
