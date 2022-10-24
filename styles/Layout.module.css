@@ -1,0 +1,7 @@
+@tailwind components;
+
+@layer components {
+ .minHeight {
+  min-height: calc(100vh - 12.5rem);
+ }
+}

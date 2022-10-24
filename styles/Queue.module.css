@@ -1,0 +1,7 @@
+@tailwind components;
+
+@layer components {
+ .queueHeight {
+  height: calc((100vh - 12.5rem) / 4.5);
+ }
+}
