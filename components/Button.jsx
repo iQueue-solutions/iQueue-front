@@ -1,4 +1,4 @@
-import styles from "./Button.module.css";
+import styles from "../styles/Button.module.css";
 
 export const Button = ({ color, variant, onClick, icon, children }) => {
  return (
