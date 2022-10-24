@@ -1,0 +1,9 @@
+@tailwind components;
+
+@layer components {
+ @media (min-width: 768px) {
+  .vertical {
+   writing-mode: vertical-rl;
+  }
+ }
+}

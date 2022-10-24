@@ -14,7 +14,7 @@ export const DropdownInput = ({ title }) => {
    : setOutDropdown(e.target.value);
 
  return (
-  <div className="w-10/12 md:w-1/3 mb-10">
+  <div className="mb-10">
    <div className="flex justify-between mb-2 cursor-pointer" onClick={toggle}>
     <div>
      {title}
