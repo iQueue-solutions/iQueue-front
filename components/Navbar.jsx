@@ -22,7 +22,7 @@ export const Navbar = () => {
     />
    </div>
 
-   <div className="w-screen hidden md:flex fixed top-0 py-7 justify-center bg-blue-300">
+   <div className="w-full hidden md:flex fixed top-0 py-7 justify-center bg-blue-300">
     <div className="w-11/12 flex bg-slate-50 h-[4rem] items-center justify-between">
      <div className="flex">
       <NavLinkPC icon={<ViewListIcon className="w-9" />} text="мої черги" />
