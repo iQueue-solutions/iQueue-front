@@ -9,7 +9,7 @@ import { NavLinkPC } from "./NavLinkPC";
 export const Navbar = () => {
  return (
   <>
-   <div className="w-full md:hidden h-16 bg-blue-300 flex justify-around fixed bottom-0">
+   <div className="w-full md:hidden h-16 bg-blue-300 flex justify-around fixed bottom-0 items-center">
     <NavLinkMobile icon={<ViewListIcon className="w-7" />} text="мої черги" />
     <NavLinkMobile
      icon={<PlusCircleIcon className="w-7" />}
