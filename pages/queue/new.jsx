@@ -1,10 +1,10 @@
-import {CreateQueueHeading} from '../components/CreateQueueHeading';
-import {Button} from '../components/Button';
-import { QueueCreationForm} from '../components/QueueCreationForm';
-import {DropdownInput} from '../components/DropdownInput'
+import {CreateQueueHeading} from '../../components/CreateQueueHeading';
+import {Button} from '../../components/Button';
+import { QueueCreationForm} from '../../components/QueueCreationForm';
+import {DropdownInput} from '../../components/DropdownInput'
 import {ChevronRightIcon, ArrowSmLeftIcon} from "@heroicons/react/outline";
 
-const CreateQueue = () => (
+const New = () => (
 
     <div className='w-full flex flex-col md:flex-row items-center justify-center'>
     <CreateQueueHeading icon={<ArrowSmLeftIcon className='w-8' />}>Нова черга</CreateQueueHeading>
@@ -16,4 +16,4 @@ const CreateQueue = () => (
     </div>
 );
 
-export default CreateQueue;
+export default New;
