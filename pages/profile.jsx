@@ -15,7 +15,7 @@ export async function getServerSideProps() {
 }
 
 const Profile = ({ users }) => {
-  const {setUser} = useContext(LayoutContext);
+  const {user: contextUser, setUser} = useContext(LayoutContext);
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-4xl md:text-8xl md:lowercase font-semibold md:font-light text-purple-800 mb-9">
@@ -34,10 +34,12 @@ const Profile = ({ users }) => {
           </div>
         </div>
       ))}
-        <button className="mt-5 self-center py-2 px-5 text-purple-800 bg-slate-50 border-2 border-purple-800 hover:text-slate-50 hover:bg-purple-800 transition mr-1 rounded-lg font-bold text-xl"
-                onClick={()=>setUser(undefined)}>
-          Вийти
-        </button>
+        {contextUser.id &&
+          <button className="mt-5 self-center py-2 px-5 text-purple-800 bg-slate-50 border-2 border-purple-800 hover:text-slate-50 hover:bg-purple-800 transition mr-1 rounded-lg font-bold text-xl"
+                  onClick={()=>setUser({})}>
+            Вийти
+          </button>
+        }
       </div>
     </div>
   );
