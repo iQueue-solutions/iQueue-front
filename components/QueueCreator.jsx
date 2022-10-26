@@ -4,8 +4,7 @@ export const QueueCreator = ({ children }) => {
  return (
   <div className="text-slate-500 flex">
    <ShieldExclamationIcon className="w-5 md:w-7" />
-   <div className="ml-1 font-semibold">{children}</div>
+   <div className="ml-1 text-lg font-semibold">{children}</div>
   </div>
  );
 };
-
