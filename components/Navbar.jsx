@@ -5,8 +5,11 @@ import {
 } from "@heroicons/react/outline";
 import { NavLinkMobile } from "./NavLinkMobile";
 import { NavLinkPC } from "./NavLinkPC";
+import {useContext} from "react";
+import {LayoutContext} from "./Layout";
 
 export const Navbar = () => {
+ const {user} = useContext(LayoutContext);
  return (
   <>
    <div className="w-full md:hidden h-16 bg-blue-300 flex justify-around fixed bottom-0 items-center">
@@ -18,7 +21,7 @@ export const Navbar = () => {
     />
     <NavLinkMobile
      icon={<UserCircleIcon className="w-7" />}
-     text="мій акаунт"
+     text={user?.firstName || "мій акаунт"}
     />
    </div>
 
@@ -32,7 +35,7 @@ export const Navbar = () => {
        isAcive={true}
       />
      </div>
-     <NavLinkPC icon={<UserCircleIcon className="w-9" />} text="мій акаунт" />
+     <NavLinkPC icon={<UserCircleIcon className="w-9" />} text={user?.firstName || "мій акаунт"} />
     </div>
    </div>
   </>

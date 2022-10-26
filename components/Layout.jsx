@@ -7,8 +7,8 @@ import {useLocalStorage} from "../utlis/useLocalStorage";
 export const LayoutContext = React.createContext(undefined);
 
 export default function Layout({ children }) {
-  const [localUser, setLocalUser] = useLocalStorage("user", {});
-  const [user, setUser] = useState({});
+  const [localUser, setLocalUser] = useLocalStorage("user", undefined);
+  const [user, setUser] = useState(undefined);
 
   // fix hydration error
   useEffect(() => {
