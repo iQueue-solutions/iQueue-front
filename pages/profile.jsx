@@ -32,6 +32,9 @@ const Profile = ({ users }) => {
       </div>
      </div>
     ))}
+    <button className="mt-5 self-center py-2 px-5 text-purple-800 bg-slate-50 border-2 border-purple-800 hover:text-slate-50 hover:bg-purple-800 transition mr-1 rounded-lg font-bold text-xl">
+     Вийти
+    </button>
    </div>
   </div>
  );
