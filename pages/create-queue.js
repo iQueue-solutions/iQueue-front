@@ -11,7 +11,7 @@ const CreateQueue = () => (
     <div className='flex flex-col w-10/12 md:w-1/3'>
     <QueueCreationForm />
     <DropdownInput title="Кількість учасників - " />
-    <Button icon={<ChevronRightIcon className='w-5 md:w-6' />} color="purple" variant="solid">Створити чергу</Button>
+    <Button icon={<ChevronRightIcon className='w-5 md:w-6' />} color="purple" variant="solid" margin={10}>Створити чергу</Button>
     </div>
     </div>
 );
