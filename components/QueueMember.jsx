@@ -1,8 +1,7 @@
 import { XIcon, PlusIcon } from "@heroicons/react/outline";
-import { Button } from "./Button";
 import { Swap } from "./Icons";
-import {useState} from "react";
-import {ConfirmQueueMember} from "./ConfirmQueueMember";
+import { useState } from "react";
+import { ConfirmQueueMember } from "./ConfirmQueueMember";
 
 const OccupiedPlace = ({
  id,
@@ -12,13 +11,21 @@ const OccupiedPlace = ({
  callback,
 }) => {
  const [isQuestion, setIsQuestion] = useState(false);
- const [question] = useState(isMe ? "Залишити чергу?" : `Помінятись місцями з ${name} ?`);
+ const [question] = useState(
+  isMe ? "Залишити чергу?" : `Помінятись місцями з ${name} ?`
+ );
 
  const openQuestion = () => setIsQuestion(true);
  const closeQuestion = () => setIsQuestion(false);
 
  if (isQuestion)
-  return <ConfirmQueueMember title={question} onConfirm={() => callback(id)} onCancel={closeQuestion} />
+  return (
+   <ConfirmQueueMember
+    title={question}
+    onConfirm={() => callback(id)}
+    onCancel={closeQuestion}
+   />
+  );
 
  return (
   <div
@@ -35,7 +42,7 @@ const OccupiedPlace = ({
      {isInQueue && (
       <button
        onClick={openQuestion}
-       className="bg-slate-300 rounded-md px-1.5 ml-3 mt-[-5px] hover:bg-slate-400 transition"
+       className="bg-slate-300 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-slate-400 transition"
       >
        {isMe ? <XIcon className="w-6" /> : <Swap />}
       </button>
@@ -48,20 +55,27 @@ const OccupiedPlace = ({
 
 const EmptyPlace = ({ id, callback }) => {
  return (
-  <Button onClick={() => callback(id)}>
-   <div className="w-full cursor-pointer bg-slate-300 h-[100px] rounded-xl mb-3 hover:bg-slate-400 transition">
-    <div className="flex justify-between px-5 py-3 font-semibold">
-     <h1 className="text-2xl">
-      {`#${id + 1}`} - <u>Вільне місце</u>
-     </h1>
-     <PlusIcon className="w-6" />
-    </div>
+  <div
+   className="w-full cursor-pointer bg-slate-300 h-[100px] rounded-xl mb-3 hover:bg-slate-400 transition"
+   onClick={() => callback(id)}
+  >
+   <div className="flex justify-between px-5 py-3 font-semibold">
+    <h1 className="text-2xl">
+     {`#${id + 1}`} - <u>Вільне місце</u>
+    </h1>
+    <PlusIcon className="w-6" />
    </div>
-  </Button>
+  </div>
  );
 };
 
-export const QueueMember = ({ id, variant, name, work, callback = () => console.warn('[QueueMember] Empty callback') }) => {
+export const QueueMember = ({
+ id,
+ variant,
+ name,
+ work,
+ callback = () => console.warn("[QueueMember] Empty callback"),
+}) => {
  return (
   <>
    {!variant.isEmpty ? (
