@@ -2,29 +2,27 @@ import { useState } from "react";
 import { Input } from "./Input";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
 
-export const DropdownInput = ({ title }) => {
- const [outDropdown, setOutDropdown] = useState("безобмежна");
+export const DropdownInput = ({ title, amount, setAmount }) => {
  const [open, setOpen] = useState(false);
 
- const toggle = () => setOpen(!open);
+ const toggleOpen = () => setOpen(o => !o);
 
  const handleInput = (e) =>
   e.target.value === ""
-   ? setOutDropdown("безобмежна")
-   : setOutDropdown(e.target.value);
+   ? setAmount(0)
+   : setAmount( parseInt(e.target.value) || 0 );
 
  return (
   <div className="mb-10">
-   <div className="flex justify-between mb-2 cursor-pointer" onClick={toggle}>
+   <div className="flex justify-between mb-2 cursor-pointer" onClick={toggleOpen}>
     <div>
      {title}
-     <b>{outDropdown}</b>
+     <b>{amount !== 0 ? amount : "безобмежна"}</b>
     </div>
-    {!open ? (
-     <ChevronDownIcon className="w-5" />
-    ) : (
-     <ChevronUpIcon className="w-5" />
-    )}
+     {open
+       ? <ChevronUpIcon className="w-5" />
+       : <ChevronDownIcon className="w-5" />
+     }
    </div>
    <div className="absolute w-10/12 md:w-1/3">
     <div className="md:w-11/12">
