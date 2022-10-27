@@ -4,7 +4,7 @@ import {useContext} from "react";
 import {LayoutContext} from "../components/Layout";
 
 export async function getServerSideProps() {
-  const response = await fetch(`${API_URL}/Users`);
+  const response = await fetch(`${API_URL}/users`);
   const users = await response.json();
 
  return {

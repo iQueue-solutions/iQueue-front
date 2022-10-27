@@ -13,15 +13,16 @@ const New = () => {
   const {user} = useContext(LayoutContext);
 
   async function createQueue() {
-    const queueID = crypto.randomUUID();
-    const adminID = user.id;
-
-    const response = await fetch(`${API_URL}/Queues`, {
+    const response = await fetch(`${API_URL}/queues`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        id: queueID,
-        adminID: adminID,
-        createTime: new Date().toISOString(),
+        name: "Test queue name",
+        adminId: user.id,
+        openTime: new Date().toISOString(),
+        closeTime: new Date().toISOString(),
         isOpen: true,
         maxRecordNumber: maxPeople,
       }),
