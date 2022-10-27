@@ -30,11 +30,11 @@ const New = () => {
   }
 
  return (
-  <div className="w-full flex flex-col md:flex-row items-center justify-center">
+  <div className="w-full flex flex-col md:flex-row items-center md:items-start justify-center">
    <CreateQueueHeading icon={<ArrowSmLeftIcon className="w-8" />}>
     Нова черга
    </CreateQueueHeading>
-   <div className="flex flex-col w-10/12 md:w-1/3">
+   <div className="flex flex-col w-10/12 md:w-1/3 mt-7">
     <QueueCreationForm />
     <DropdownInput
      title="Кількість учасників - "
@@ -45,7 +45,6 @@ const New = () => {
      icon={<ChevronRightIcon className="w-5 md:w-6" />}
      color="purple"
      variant="solid"
-     margin={10}
      onClick={createQueue}
     >
      Створити чергу

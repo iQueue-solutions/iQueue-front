@@ -13,8 +13,8 @@ export const DropdownInput = ({ title, amount, setAmount }) => {
    : setAmount( parseInt(e.target.value) || 0 );
 
  return (
-  <div className="mb-10">
-   <div className="flex justify-between mb-2 cursor-pointer" onClick={toggleOpen}>
+  <div className="">
+   <div className={`flex justify-between cursor-pointer ${open ? 'mb-2' : 'mb-10'}`} onClick={toggleOpen}>
     <div>
      {title}
      <b>{amount !== 0 ? amount : "безобмежна"}</b>
@@ -24,11 +24,7 @@ export const DropdownInput = ({ title, amount, setAmount }) => {
        : <ChevronDownIcon className="w-5" />
      }
    </div>
-   <div className="absolute w-10/12 md:w-1/3">
-    <div className="md:w-11/12">
      {open && <Input handleInput={handleInput} placeholder="Кількість" />}
-    </div>
-   </div>
   </div>
  );
 };

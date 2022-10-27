@@ -4,6 +4,7 @@
  @media (min-width: 768px) {
   .vertical {
    writing-mode: vertical-rl;
+   transform:scale(-1);
   }
  }
 }

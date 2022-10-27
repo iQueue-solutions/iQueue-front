@@ -2,7 +2,7 @@ import { XIcon, XCircleIcon, CheckCircleIcon } from "@heroicons/react/outline";
 import { Button } from "./Button";
 export const AddToQueue = ({ queueName }) => {
  return (
-  <div className="bg-blue-300 flex flex-col items-center fixed rounded-lg w-[330px] md:w-[1100px] h-[500px] md:h-[600px] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-55%] drop-shadow-2xl">
+  <div className="bg-blue-300 z-10 flex flex-col items-center fixed rounded-lg w-[330px] md:w-[1100px] h-[500px] md:h-[600px] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-55%] drop-shadow-2xl">
    <XIcon className="w-7 md:w-8 self-end text-slate-50 m-1 hover:text-purple-800" />
    <div className="bg-slate-50 w-[270px] md:w-[1000px] h-[400px] md:h-[450px] flex flex-col items-center px-5 md:mb-7">
     <h1 className="text-2xl md:text-4xl font-bold pt-2 pb-1">
