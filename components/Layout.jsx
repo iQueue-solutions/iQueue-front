@@ -3,6 +3,7 @@ import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import styles from "../styles/Layout.module.css";
 import {useLocalStorage} from "../utlis/useLocalStorage";
+import Head from "next/head";
 
 export const LayoutContext = React.createContext(undefined);
 
@@ -19,7 +20,10 @@ export default function Layout({ children }) {
     setLocalUser(user);
   }, [user]);
 
-  return (
+  return ( <>
+    <Head>
+      <title>iQueue</title>
+    </Head>
     <LayoutContext.Provider value={{user, setUser}}>
       <div className="flex flex-col"> <Navbar />
        <div className="flex flex-col md:mt-10 items-center md:bg-blue-300">
@@ -32,5 +36,5 @@ export default function Layout({ children }) {
        <Footer />
       </div>
     </LayoutContext.Provider>
-  );
+  </>);
 }
