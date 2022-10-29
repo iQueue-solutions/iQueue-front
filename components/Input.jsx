@@ -1,4 +1,4 @@
-export const Input = ({ icon, placeholder, handleInput }) => {
+export const Input = ({ icon, placeholder, handleInput, type="text" }) => {
  return (
   <div
    className={`border-2 border-purple-800 p-2 rounded-lg ${
@@ -7,7 +7,7 @@ export const Input = ({ icon, placeholder, handleInput }) => {
   >
    {icon}
    <input
-    type="text"
+    type={type}
     onInput={handleInput}
     placeholder={placeholder}
     className="bg-transparent focus:outline-none w-full"
