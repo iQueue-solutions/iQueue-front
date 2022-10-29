@@ -11,7 +11,7 @@ export default function Layout({ children }) {
   const [localUser, setLocalUser] = useLocalStorage("user", {});
   const [user, setUser] = useState({});
 
-  // fix hydration error
+  // fix for hydration error
   useEffect(() => {
     setUser(localUser);
   }, []);

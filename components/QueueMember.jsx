@@ -54,10 +54,28 @@ const OccupiedPlace = ({
 };
 
 const EmptyPlace = ({ id, callback }) => {
+ const [isQuestion, setIsQuestion] = useState(false);
+ const [lab, setLab] = useState('');
+
+ const openQuestion = () => setIsQuestion(true);
+ const closeQuestion = () => setIsQuestion(false);
+
+ if (isQuestion)
+  return (
+    <ConfirmQueueMember
+      title="Зайняти чергу?"
+      onConfirm={() => callback(id)}
+      onCancel={closeQuestion}
+      isInput
+      inputValue={lab}
+      setInputValue={setLab}
+    />
+  );
+
  return (
   <div
    className="w-full cursor-pointer bg-slate-300 h-[100px] rounded-xl mb-3 hover:bg-blue-300 transition text-slate-500 hover:text-slate-900"
-   onClick={() => callback(id)}
+   onClick={openQuestion}
   >
    <div className="flex justify-between px-5 py-3 font-semibold">
     <h1 className="text-xl md:text-2xl">
