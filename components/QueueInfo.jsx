@@ -1,25 +1,19 @@
 import { QueueCreator } from "../components/QueueCreator";
-import { GroupHeading } from "../components/GroupHeading";
 import {
  UserAddIcon,
  CogIcon,
- ShareIcon,
- ArrowSmLeftIcon,
+ ShareIcon
 } from "@heroicons/react/outline";
 
 export const QueueInfo = () => {
  return (
-  <div className="mt-6 mb-10">
-   <ArrowSmLeftIcon className="absolute text-purple-800 mr-10 w-9 md:hidden hover:text-purple-500" />
-   <GroupHeading queueName="АВПЗ ПЗПІ-20-2" />
-   <div className="flex justify-between">
+   <div className="flex justify-between md:flex-col md:w-full font-semibold md:mt-2 mb-7 cursor-pointer">
     <QueueCreator>Олійник О. В.</QueueCreator>
-    <div className="text-purple-800 flex">
-     <UserAddIcon className="w-6 md:w-7 hover:text-purple-500" />
-     <CogIcon className="w-6 md:w-7 hover:text-purple-500" />
-     <ShareIcon className="w-6 md:w-7 hover:text-purple-500" />
+    <div className="text-purple-800 flex md:flex-col md:w-full">
+      <div className="flex md:bg-slate-200 p-2 rounded-2xl md:hover:bg-slate-300 mb-1"><UserAddIcon className="w-6 md:w-7 hover:text-purple-500" /><div className="ml-2 text-slate-700 hidden md:flex">Додати</div></div>
+      <div className="flex md:bg-slate-200 p-2 rounded-2xl md:hover:bg-slate-300 mb-1"><CogIcon className="w-6 md:w-7 hover:text-purple-500" /><div className="ml-2 text-slate-700 hidden md:flex">Налаштування</div></div>
+      <div className="flex md:bg-slate-200 p-2 rounded-2xl md:hover:bg-slate-300 mb-1"><ShareIcon className="w-6 md:w-7 hover:text-purple-500" /><div className="ml-2 text-slate-700 hidden md:flex">Поділитися</div></div>
     </div>
    </div>
-  </div>
  );
 };
