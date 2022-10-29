@@ -1,6 +1,6 @@
 import { Heading } from "./Heading";
 import { ShareQueue } from "./ShareQueue";
-import { QueueCreator } from "./QueueCreator";
+import { QueueCreator } from "./QueueInfo";
 
 export const QueueListHeading = ({ queueName, queueCreator }) => {
  return (
