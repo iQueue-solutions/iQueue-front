@@ -12,7 +12,7 @@ const OccupiedPlace = ({
 }) => {
  const [isQuestion, setIsQuestion] = useState(false);
  const [question] = useState(
-  isMe ? "Залишити чергу?" : `Помінятись місцями з ${name} ?`
+  isMe ? "Залишити чергу?" : `Помінятись з ${name}?`
  );
 
  const openQuestion = () => setIsQuestion(true);
@@ -29,12 +29,12 @@ const OccupiedPlace = ({
 
  return (
   <div
-   className={`w-full bg-slate-400 h-[100px] rounded-xl mb-3 ${
+   className={`w-full bg-blue-300 h-[100px] rounded-xl mb-3 ${
     isMe && "border-4 border-solid border-yellow-400"
    }`}
   >
    <div className="flex justify-between px-5 py-3 font-semibold">
-    <h1 className="text-2xl">
+    <h1 className="text-xl md:text-2xl w-2/3">
      {`#${id + 1}`} - {name}
     </h1>
     <div className="flex">
@@ -42,7 +42,7 @@ const OccupiedPlace = ({
      {isInQueue && (
       <button
        onClick={openQuestion}
-       className="bg-slate-300 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-slate-400 transition"
+       className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition"
       >
        {isMe ? <XIcon className="w-6" /> : <Swap />}
       </button>
@@ -56,11 +56,11 @@ const OccupiedPlace = ({
 const EmptyPlace = ({ id, callback }) => {
  return (
   <div
-   className="w-full cursor-pointer bg-slate-300 h-[100px] rounded-xl mb-3 hover:bg-slate-400 transition"
+   className="w-full cursor-pointer bg-slate-300 h-[100px] rounded-xl mb-3 hover:bg-blue-300 transition text-slate-500 hover:text-slate-900"
    onClick={() => callback(id)}
   >
    <div className="flex justify-between px-5 py-3 font-semibold">
-    <h1 className="text-2xl">
+    <h1 className="text-xl md:text-2xl">
      {`#${id + 1}`} - <u>Вільне місце</u>
     </h1>
     <PlusIcon className="w-6" />
