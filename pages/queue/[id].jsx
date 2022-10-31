@@ -6,14 +6,26 @@ import {DateToQueueDate} from "../../utlis";
 
 export const getServerSideProps = async (ctx) => {
 
-  
+  const queueResponse = await fetch(`${API_URL}/queues/${ctx.query.id}`);
+
+  if (!queueResponse.ok) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const queue = await queueResponse.json();
+
+  const adminResponse = await fetch(`${API_URL}/users/${queue.adminId}`);
+  const admin = await adminResponse.json();
+
   return {
     props: {
-      name: "ksdkdpxpx[l",
+      name: queue.name,
       queueInfo: {
-        start: DateToQueueDate( new Date() ),
-        end: DateToQueueDate( new Date() ),
-        creator: `Спектров Денис`,
+        start: DateToQueueDate( new Date(queue.openTime) ),
+        end: DateToQueueDate( new Date(queue.closeTime) ),
+        creator: `${admin.lastName} ${admin.firstName}`,
       },
     }
   }
