@@ -6,10 +6,31 @@ import {
 
 export const QueueCreator = ({ Icon, children }) => {
   return (
-    <div className="text-slate-500 flex p-2">
-      <Icon className="w-5 md:w-7" />
-      <div className="ml-1 text-lg font-semibold">{children}</div>
+    <div className="text-slate-500 flex p-2 items-center">
+      <Icon className="w-6 md:w-7" />
+      <div className="ml-1 text-md md:text-lg font-semibold">{(children || '').substring(0, (children || '').indexOf(' ')+2)+"."}</div>
     </div>
+  );
+};
+
+export const QueueTime = ({start, end}) => {
+  return(
+    <>
+    <div className="text-slate-500 flex p-2 md:hidden items-center">
+      <ClockIcon className="w-6 md:w-7" />
+      <div className="ml-1 text-md font-semibold">{(start || '').slice(0,-5)} - {(end || '').slice(0,-5)}</div>
+    </div>
+    <div className="hidden md:flex flex-col">
+      <div className="text-slate-500 flex p-2">
+      <ClockIcon className="w-6 md:w-7" />
+      <div className="ml-1 text-lg font-semibold">{start}</div>
+    </div>
+    <div className="text-slate-500 flex p-2">
+      <ClockIcon className="w-6 md:w-7" />
+      <div className="ml-1 text-lg font-semibold">{end}</div>
+    </div>
+    </div>
+    </>
   );
 };
 
@@ -24,10 +45,11 @@ export const QueueOptionsBtn = ({ Icon, children }) => {
 
 export const QueueInfo = ({creator, start, end}) => {
  return (
-   <div className="flex justify-between md:flex-col md:w-full font-semibold md:mt-2 mb-7 cursor-pointer">
-    <QueueCreator Icon={ShieldExclamationIcon}>{creator}</QueueCreator>
-    <QueueCreator Icon={ClockIcon}>{start}</QueueCreator>
-    <QueueCreator Icon={ClockIcon}>{end}</QueueCreator>
+   <div className="flex flex-col md:w-full font-semibold md:mt-2 mb-7 cursor-pointer items-center">
+    <div className="flex md:flex-col justify-between w-full">
+      <QueueCreator Icon={ShieldExclamationIcon}>{creator}</QueueCreator>
+      <QueueTime start={start} end={end} />
+    </div>
     <div className="text-purple-800 flex md:flex-col md:w-full">
       <QueueOptionsBtn Icon={UserAddIcon}>Додати</QueueOptionsBtn>
       <QueueOptionsBtn Icon={CogIcon}>Налаштування</QueueOptionsBtn>
