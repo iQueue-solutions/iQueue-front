@@ -1,8 +1,10 @@
 import {
-  UserAddIcon,
+  UserAddIcon, TrashIcon,
   CogIcon,
   ShareIcon, ShieldExclamationIcon, ClockIcon
 } from "@heroicons/react/outline";
+import {useState} from "react";
+import {AddToQueue} from "./AddToQueue";
 
 export const QueueCreator = ({ Icon, children }) => {
   return (
@@ -34,9 +36,9 @@ export const QueueTime = ({start, end}) => {
   );
 };
 
-export const QueueOptionsBtn = ({ Icon, children }) => {
+export const QueueOptionsBtn = ({ Icon, onClick, children }) => {
   return (
-    <div className="flex md:bg-slate-200 p-2 rounded-2xl md:hover:bg-slate-300 mb-1">
+    <div className="flex md:bg-slate-200 p-2 rounded-2xl md:hover:bg-slate-300 mb-1" onClick={onClick}>
       <Icon className="w-6 md:w-7 hover:text-purple-500" />
       <div className="ml-2 text-slate-700 hidden md:flex">{children}</div>
     </div>
@@ -44,6 +46,10 @@ export const QueueOptionsBtn = ({ Icon, children }) => {
 }
 
 export const QueueInfo = ({creator, start, end}) => {
+  const [isAddToQueue, setIsAddToQueue] = useState(false);
+  const showAddPeople = () => setIsAddToQueue(true);
+  const hideAddPeople = () => setIsAddToQueue(false);
+
  return (
    <div className="flex flex-col md:w-full font-semibold md:mt-2 mb-7 cursor-pointer items-center">
     <div className="flex md:flex-col justify-between w-full">
@@ -51,10 +57,12 @@ export const QueueInfo = ({creator, start, end}) => {
       <QueueTime start={start} end={end} />
     </div>
     <div className="text-purple-800 flex md:flex-col md:w-full">
-      <QueueOptionsBtn Icon={UserAddIcon}>Додати</QueueOptionsBtn>
+      <QueueOptionsBtn Icon={UserAddIcon} onClick={showAddPeople}>Додати</QueueOptionsBtn>
       <QueueOptionsBtn Icon={CogIcon}>Налаштування</QueueOptionsBtn>
       <QueueOptionsBtn Icon={ShareIcon}>Поділитися</QueueOptionsBtn>
+      <QueueOptionsBtn Icon={TrashIcon}>Видалити</QueueOptionsBtn>
     </div>
+     {isAddToQueue && <AddToQueue onClose={hideAddPeople} />}
    </div>
  );
 };
