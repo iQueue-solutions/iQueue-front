@@ -15,5 +15,4 @@ export const createParticipant = (queueId, userId) => {
       userId
     ])
   })
-    .then(response => response.json())
 }

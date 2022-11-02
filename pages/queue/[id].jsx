@@ -60,7 +60,11 @@ const Id = ({name, queueInfo}) => {
   }, [participants]);
 
   const onAddParticipant = () => {
-    createParticipant(queueInfo.id, user.id).then(response => console.log(response));
+    createParticipant(queueInfo.id, user.id).then(response => {
+      if(response.ok) {
+        router.reload();
+      }
+    });
   }
 
   const onAddParticipantCancel = () => router.push("/");
