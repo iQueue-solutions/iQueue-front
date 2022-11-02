@@ -1,19 +1,28 @@
 import { CreateQueueHeading } from "../../components/CreateQueueHeading";
 import { Button } from "../../components/Button";
+import { useRouter } from "next/router";
 import { DropdownInput } from "../../components/DropdownInput";
-import {ChevronRightIcon, ArrowSmLeftIcon, CalendarIcon} from "@heroicons/react/outline";
-import { useContext, useState } from "react";
+import { ChevronRightIcon, ArrowSmLeftIcon } from "@heroicons/react/outline";
+import { useContext, useEffect, useState } from "react";
 import { API_URL } from "../../constants";
 import { LayoutContext } from "../../components/Layout";
-import {Input} from "../../components/Input";
-
-const calendarIcon = <CalendarIcon className="w-5 md:w-6 mr-2" />;
+import { Input } from "../../components/Input";
 
 const New = () => {
   const [maxPeople, setMaxPeople] = useState(0);
   const [queueName, setQueueName] = useState('');
-  const [queueOpenTime, setQueueOpenTime] = useState('');
-  const [queueCloseTime, setQueueCloseTime] = useState('');
+
+  const formatDate = (date) => {
+    return new Date(date.toString().split('GMT')[0]+' UTC').toISOString().split(".")[0];
+  }
+
+  let date = new Date();
+  const openTime = formatDate(date)
+  const [queueOpenTime, setQueueOpenTime] = useState(openTime);
+
+  date.setDate(date.getDay())
+  const closeTime = formatDate(date)
+  const [queueCloseTime, setQueueCloseTime] = useState(closeTime);
 
   const {user} = useContext(LayoutContext);
 
@@ -24,18 +33,18 @@ const New = () => {
 
   const inputQueueOpenTime = (event) => {
     const value = event.target.value;
-    const date = new Date(value).toISOString()
-    setQueueOpenTime(date);
+    setQueueOpenTime(value);
   }
 
   const inputQueueCloseTime = (event) => {
     const value = event.target.value;
-    const date = new Date(value).toISOString()
-    setQueueCloseTime(date);
+    setQueueCloseTime(value);
   }
 
-  async function createQueue() {
-    const response = await fetch(`${API_URL}/queues`, {
+  const router = useRouter();
+
+  function createQueue() {
+    fetch(`${API_URL}/queues`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,13 +52,22 @@ const New = () => {
       body: JSON.stringify({
         name: queueName,
         adminId: user.id,
-        openTime: queueOpenTime,
-        closeTime: queueCloseTime,
+        openTime: new Date(queueOpenTime).toISOString(),
+        closeTime: new Date(queueCloseTime).toISOString(),
         isOpen: true,
         maxRecordNumber: maxPeople,
       }),
-    });
+    })
+      .then(res => res.json())
+      .then(id =>
+      router.push(`/queue/${id}`)
+    );
   }
+
+ const [minDate, setMinDate] = useState('');
+  useEffect(() => {
+    setMinDate(formatDate(new Date()));
+  }, []);
 
  return (
   <div className="w-full flex flex-col items-center md:items-center justify-center">
@@ -58,9 +76,13 @@ const New = () => {
    </CreateQueueHeading>
    <div className="flex flex-col w-10/12 md:w-1/3">
      <form className="mt-9">
-       <Input placeholder="Назва" handleInput={inputQueueName}/>
-       <Input type={"date"} handleInput={inputQueueOpenTime} placeholder="Початок запису в чергу" />
-       <Input type={"date"} handleInput={inputQueueCloseTime} placeholder="Кінець запису в чергу" />
+       <Input value={queueName} placeholder="Назва" handleInput={inputQueueName}/>
+
+       <div className="text-slate-600 text-lg">{"Час початку запису в чергу"}</div>
+       <Input min={minDate} value={queueOpenTime} type={"datetime-local"} handleInput={inputQueueOpenTime} placeholder="Час початку запису в чергу" />
+
+       <div className="text-slate-600 text-lg">{"Кінець черги"}</div>
+       <Input min={minDate} value={queueCloseTime} type={"datetime-local"} handleInput={inputQueueCloseTime} placeholder="Кінець запису в чергу" />
      </form>
     <DropdownInput
      title="Кількість учасників - "

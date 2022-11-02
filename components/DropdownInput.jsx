@@ -24,7 +24,7 @@ export const DropdownInput = ({ title, amount, setAmount }) => {
        : <ChevronDownIcon className="w-5" />
      }
    </div>
-     {open && <Input type={"number"} handleInput={handleInput} placeholder="Кількість" />}
+     {open && <Input value={amount} type={"number"} handleInput={handleInput} placeholder="Кількість" />}
   </div>
  );
 };
