@@ -1,9 +1,9 @@
 import { CogIcon } from "@heroicons/react/outline";
 import styles from "../styles/Queue.module.css";
 
-export const Queue = ({ name, creatorName, isMy }) => {
+export const Queue = ({ name, creatorName, isMy, onClick }) => {
  return (
-  <div className={`w-full bg-blue-300 rounded-lg ${styles.queueHeight} mb-3`}>
+  <div onClick={onClick} className={`w-full bg-blue-300 rounded-lg ${styles.queueHeight} mb-3`}>
    <div className="flex h-full justify-between items-center px-5">
     <div>
      <div className="text-3xl font-semibold text-slate-900">{name}</div>
