@@ -1,7 +1,6 @@
 import { CheckIcon, XIcon, LockClosedIcon } from "@heroicons/react/outline";
 
-export const QueueStatus = ({ isOpen, onConfirm, onCancel }) => {
- if (isOpen) {
+export const QueueNotificationJoin = ({ onConfirm, onCancel }) => {
   return (
    <div className="md:w-3/5 w-11/12 bg-amber-200 h-[100px] rounded-b-[50px] mb-3">
     <div className="flex flex-col items-center px-5 py-3 font-semibold">
@@ -27,11 +26,13 @@ export const QueueStatus = ({ isOpen, onConfirm, onCancel }) => {
     </div>
    </div>
   );
- }
- return (
-  <div className="md:w-3/5 w-11/12 bg-slate-300 text-slate-900 flex justify-center text-lg md:text-2xl rounded-b-[50px] font-semibold py-5">
-   <LockClosedIcon className="w-5 md:w-6" />
-   <div className="ml-5">Черга закрита</div>
-  </div>
- );
 };
+
+export const QueueNotificationClosed = () => {
+ return (
+   <div className="md:w-3/5 w-11/12 bg-slate-300 text-slate-900 flex justify-center text-lg md:text-2xl rounded-b-[50px] font-semibold py-5">
+    <LockClosedIcon className="w-5 md:w-6" />
+    <div className="ml-5">Черга закрита</div>
+   </div>
+ );
+}
