@@ -7,7 +7,7 @@ import { useState, useEffect, useContext } from "react";
 import { createParticipant, getParticipants } from "../../api/participants";
 import { LayoutContext } from "../../components/Layout";
 import { useRouter } from "next/router";
-import { QueueStatus } from "../../components/QueueStatus";
+import {QueueNotificationClosed, QueueNotificationJoin} from "../../components/QueueNotification";
 
 export const getServerSideProps = async (ctx) => {
  const queueResponse = await fetch(`${API_URL}/queues/${ctx.query.id}`);
@@ -28,6 +28,7 @@ export const getServerSideProps = async (ctx) => {
    name: queue.name,
    queueInfo: {
     id: queue.id,
+    isOpen: queue.isOpen,
     start: DateToQueueDate(new Date(queue.openTime)),
     end: DateToQueueDate(new Date(queue.closeTime)),
     creator: `${admin.lastName} ${admin.firstName}`,
@@ -40,7 +41,7 @@ const Id = ({ name, queueInfo }) => {
  const router = useRouter();
 
  const [participants, setParticipants] = useState([]);
- const [isParticipant, setIsParticipant] = useState(false);
+ const [isParticipant, setIsParticipant] = useState(true);
 
  const { user } = useContext(LayoutContext);
 
@@ -72,9 +73,9 @@ const Id = ({ name, queueInfo }) => {
  return (
   <div className="flex justify-center">
    <div className="flex flex-col w-11/12 items-center">
-    {!isParticipant && (
-     <QueueStatus
-      isOpen={false}
+    {!queueInfo.isOpen && <QueueNotificationClosed />}
+    {(queueInfo.isOpen && !isParticipant) && (
+     <QueueNotificationJoin
       onConfirm={onAddParticipant}
       onCancel={onAddParticipantCancel}
      />
