@@ -54,6 +54,7 @@ const New = () => {
 
  return (
   <div className="w-full flex flex-col items-center md:items-center justify-center">
+    <AddToQueue />
    <CreateQueueHeading icon={<ArrowSmLeftIcon className="w-9" />}>
     Нова черга
    </CreateQueueHeading>
