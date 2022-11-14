@@ -6,7 +6,6 @@ import { useContext, useState } from "react";
 import { API_URL } from "../../constants";
 import { LayoutContext } from "../../components/Layout";
 import {Input} from "../../components/Input";
-import { AddToQueue } from "../../components/AddToQueue";
 
 const calendarIcon = <CalendarIcon className="w-5 md:w-6 mr-2" />;
 
@@ -54,7 +53,6 @@ const New = () => {
 
  return (
   <div className="w-full flex flex-col items-center md:items-center justify-center">
-    <AddToQueue />
    <CreateQueueHeading icon={<ArrowSmLeftIcon className="w-9" />}>
     Нова черга
    </CreateQueueHeading>

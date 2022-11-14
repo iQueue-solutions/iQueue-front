@@ -15,19 +15,19 @@ export const AddToQueue = ({ queueName, onClose }) => {
     <div className="flex flex-col overflow-scroll overflow-x-hidden md:overflow-hidden w-full md:flex-wrap md:items-center">
       <div className="flex md:w-1/4">
       <XCircleIcon className="w-6 text-red-400 hover:text-red-700" />
-      <div className="pl-1">Костікова Олеся</div>
+      <div className="pl-1 w-3/4">Костікова Олеся</div>
      </div>
      <div className="flex md:w-1/4">
       <CheckCircleIcon className="w-6 text-green-400 hover:text-green-700" />
-      <div className="pl-1">Костікова Оddddddлеся</div>
+      <div className="pl-1 w-3/4">Костікова Оddddddлеся</div>
      </div>
      <div className="flex md:w-1/4">
       <CheckCircleIcon className="w-6 text-green-400 hover:text-green-700" />
-      <div className="pl-1">Костікова Оddddddлеся</div>
+      <div className="pl-1 w-3/4">Костікова Оddddddлеся</div>
      </div>
-     <div className="flex md:w-1/4">
+     <div className="flex w-full md:w-1/4">
       <CheckCircleIcon className="w-6 text-green-400 hover:text-green-700" />
-      <div className="pl-1">Костікова Оddddddлеся</div>
+      <div className="pl-1 w-3/4">Костикова Олллллллеся</div>
      </div>
     </div>
    </div>
