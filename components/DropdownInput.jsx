@@ -7,10 +7,10 @@ export const DropdownInput = ({ title, amount, setAmount }) => {
 
  const toggleOpen = () => setOpen(o => !o);
 
- const handleInput = (e) =>
-  e.target.value === ""
+ const handleInput = (value) =>
+  value === ""
    ? setAmount(0)
-   : setAmount( parseInt(e.target.value) || 0 );
+   : setAmount( parseInt(value) || 0 );
 
  return (
   <div className="">

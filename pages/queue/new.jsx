@@ -26,21 +26,6 @@ const New = () => {
 
   const {user} = useContext(LayoutContext);
 
-  const inputQueueName = (event) => {
-    const value = event.target.value;
-    setQueueName(value);
-  }
-
-  const inputQueueOpenTime = (event) => {
-    const value = event.target.value;
-    setQueueOpenTime(value);
-  }
-
-  const inputQueueCloseTime = (event) => {
-    const value = event.target.value;
-    setQueueCloseTime(value);
-  }
-
   const router = useRouter();
 
   function createQueue() {
@@ -76,13 +61,13 @@ const New = () => {
    </CreateQueueHeading>
    <div className="flex flex-col w-10/12 md:w-1/3">
      <form className="mt-9">
-       <Input value={queueName} placeholder="Назва" handleInput={inputQueueName}/>
+       <Input value={queueName} placeholder="Назва" handleInput={setQueueName}/>
 
        <div className="text-slate-600 text-lg">{"Час початку запису в чергу"}</div>
-       <Input min={minDate} value={queueOpenTime} type={"datetime-local"} handleInput={inputQueueOpenTime} placeholder="Час початку запису в чергу" />
+       <Input min={minDate} value={queueOpenTime} type={"datetime-local"} handleInput={setQueueOpenTime} placeholder="Час початку запису в чергу" />
 
        <div className="text-slate-600 text-lg">{"Кінець черги"}</div>
-       <Input min={minDate} value={queueCloseTime} type={"datetime-local"} handleInput={inputQueueCloseTime} placeholder="Кінець запису в чергу" />
+       <Input min={minDate} value={queueCloseTime} type={"datetime-local"} handleInput={setQueueCloseTime} placeholder="Кінець запису в чергу" />
      </form>
     <DropdownInput
      title="Кількість учасників - "

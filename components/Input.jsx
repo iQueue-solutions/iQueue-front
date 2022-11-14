@@ -5,7 +5,7 @@ export const Input = ({icon, placeholder, handleInput, value = "", min = "", typ
     <input
       value={value}
       type={type}
-      onInput={handleInput}
+      onInput={e => handleInput(e.target.value)}
       placeholder={placeholder}
       min={min}
       className="bg-transparent focus:outline-none w-full"
