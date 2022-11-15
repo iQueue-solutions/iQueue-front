@@ -1,7 +1,8 @@
 import {
   UserAddIcon, TrashIcon,
   CogIcon,
-  ShareIcon, ShieldExclamationIcon, ClockIcon
+  ShareIcon, ShieldExclamationIcon, ClockIcon,
+  LockOpenIcon, LockClosedIcon, ArrowCircleLeftIcon
 } from "@heroicons/react/outline";
 import {useState} from "react";
 import {AddToQueue} from "./AddToQueue";
@@ -10,7 +11,7 @@ export const QueueCreator = ({ Icon, children }) => {
   return (
     <div className="text-slate-500 flex p-2 items-center">
       <Icon className="w-6 md:w-7" />
-      <div className="ml-1 text-md md:text-lg font-semibold">{(children || '').substring(0, (children || '').indexOf(' ')+2)+"."}</div>
+      <div className="ml-1 text-md md:text-lg font-semibold">{children}</div>
     </div>
   );
 };
@@ -45,7 +46,7 @@ export const QueueOptionsBtn = ({ Icon, onClick, children }) => {
   );
 }
 
-export const QueueInfo = ({creator, start, end}) => {
+export const QueueInfo = ({creator, start, end, isOpen, isParticipant, isAdmin}) => {
   const [isAddToQueue, setIsAddToQueue] = useState(false);
   const showAddPeople = () => setIsAddToQueue(true);
   const hideAddPeople = () => setIsAddToQueue(false);
@@ -57,10 +58,20 @@ export const QueueInfo = ({creator, start, end}) => {
       <QueueTime start={start} end={end} />
     </div>
     <div className="text-purple-800 flex md:flex-col md:w-full">
-      <QueueOptionsBtn Icon={UserAddIcon} onClick={showAddPeople}>Додати</QueueOptionsBtn>
-      <QueueOptionsBtn Icon={CogIcon}>Налаштування</QueueOptionsBtn>
       <QueueOptionsBtn Icon={ShareIcon}>Поділитися</QueueOptionsBtn>
-      <QueueOptionsBtn Icon={TrashIcon}>Видалити</QueueOptionsBtn>
+      {isParticipant &&
+        <QueueOptionsBtn Icon={ArrowCircleLeftIcon}>Вийти</QueueOptionsBtn>
+      }
+      {isAdmin && <>
+        <hr className="my-4 mx-auto w-40 h-1 bg-gray-200 sm:hidden md:block" />
+        <QueueOptionsBtn Icon={UserAddIcon} onClick={showAddPeople}>Додати</QueueOptionsBtn>
+        <QueueOptionsBtn Icon={CogIcon}>Налаштування</QueueOptionsBtn>
+        {isOpen
+          ? <QueueOptionsBtn Icon={LockOpenIcon}>Заблокувати</QueueOptionsBtn>
+          : <QueueOptionsBtn Icon={LockClosedIcon}>Розблокувати</QueueOptionsBtn>
+        }
+        <QueueOptionsBtn Icon={TrashIcon}>Видалити</QueueOptionsBtn>
+      </>}
     </div>
      {isAddToQueue && <AddToQueue onClose={hideAddPeople} />}
    </div>

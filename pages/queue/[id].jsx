@@ -3,7 +3,7 @@ import { QueueMembers } from "../../components/QueueMembers";
 import { CreateQueueHeading } from "../../components/CreateQueueHeading";
 import { API_URL } from "../../constants";
 import { DateToQueueDate } from "../../utlis";
-import { useState, useEffect, useContext } from "react";
+import {useState, useEffect, useContext, useRef} from "react";
 import { createParticipant, getParticipants } from "../../api/participants";
 import { LayoutContext } from "../../components/Layout";
 import { useRouter } from "next/router";
@@ -24,32 +24,34 @@ export const getServerSideProps = async (ctx) => {
  const admin = await adminResponse.json();
 
  return {
-  props: {
-   name: queue.name,
-   queueInfo: {
-    id: queue.id,
-    isOpen: queue.isOpen,
-    start: DateToQueueDate(new Date(queue.openTime)),
-    end: DateToQueueDate(new Date(queue.closeTime)),
-    creator: `${admin.lastName} ${admin.firstName}`,
-   },
-  },
+  props: {queue, admin},
  };
 };
 
-const Id = ({ name, queueInfo }) => {
+const Id = ({ queue, admin }) => {
  const router = useRouter();
 
  const [participants, setParticipants] = useState([]);
  const [isParticipant, setIsParticipant] = useState(true);
 
+ const start = useRef(DateToQueueDate(new Date(queue.openTime)));
+ const end = useRef(DateToQueueDate(new Date(queue.closeTime)));
+ const creator = useRef(`${admin.lastName} ${admin.firstName}`);
+ const [isAdmin, setIsAdmin] = useState(false);
+
  const { user } = useContext(LayoutContext);
 
  useEffect(() => {
-  getParticipants(queueInfo.id).then((_participants) =>
+  getParticipants(queue.id).then((_participants) =>
    setParticipants(_participants)
   );
  }, []);
+
+ useEffect(() => {
+  if (user) {
+   setIsAdmin(admin.id === user.id);
+  }
+ }, [user]);
 
  useEffect(() => {
   const _isParticipant = participants.some((participant) => {
@@ -61,7 +63,7 @@ const Id = ({ name, queueInfo }) => {
  }, [participants]);
 
  const onAddParticipant = () => {
-  createParticipant(queueInfo.id, user.id).then((response) => {
+  createParticipant(queue.id, user.id).then((response) => {
    if (response.ok) {
     router.reload();
    }
@@ -73,17 +75,17 @@ const Id = ({ name, queueInfo }) => {
  return (
   <div className="flex justify-center">
    <div className="flex flex-col w-11/12 items-center">
-    {!queueInfo.isOpen && <QueueNotificationClosed />}
-    {(queueInfo.isOpen && !isParticipant) && (
+    {!queue.isOpen && <QueueNotificationClosed />}
+    {(queue.isOpen && !isParticipant) && (
      <QueueNotificationJoin
       onConfirm={onAddParticipant}
       onCancel={onAddParticipantCancel}
      />
     )}
-    <CreateQueueHeading>{name}</CreateQueueHeading>
+    <CreateQueueHeading>{queue.name}</CreateQueueHeading>
     <div className="md:flex w-full mt-5 hidden">
      <div className="basis-1/5 px-10">
-      <QueueInfo {...queueInfo} />
+      <QueueInfo creator={creator.current} start={start.current} end={end.current} isOpen={queue.isOpen} isParticipant={isParticipant} isAdmin={isAdmin} />
      </div>
      <div className="basis-3/5">
       <QueueMembers />
@@ -91,7 +93,7 @@ const Id = ({ name, queueInfo }) => {
      <div className="basis-1/5 px-10"></div>
     </div>
     <div className="md:hidden">
-     <QueueInfo {...queueInfo} />
+     <QueueInfo creator={creator.current} start={start.current} end={end.current} isOpen={queue.isOpen} isParticipant={isParticipant} isAdmin={isAdmin} />
      <QueueMembers />
     </div>
    </div>
