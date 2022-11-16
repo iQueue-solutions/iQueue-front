@@ -1,0 +1,45 @@
+import {API_URL} from "../constants";
+import {Participant} from "./participants";
+
+export type Queue = {
+  id: string;
+  name?: string;
+  adminId?: string;
+  createTime: string;
+  openTime?: string;
+  closeTime?: string;
+  isOpen: boolean;
+  maxRecordNumber?: number;
+  participants?: Participant[];
+}
+
+export const getQueues = async (): Promise<Queue[]> => {
+  return await fetch(`${API_URL}/queues`)
+    .then(response => response.json())
+}
+
+export const getQueue = async (id: string): Promise<Queue> => {
+  return await fetch(`${API_URL}/queues/${id}`)
+    .then(response => response.json())
+}
+
+export const createQueue = async ({name, adminId, openTime, closeTime, maxRecordNumber}
+: {name: string, adminId: string, openTime: string, closeTime: string, maxRecordNumber: number  }
+): Promise<string> => {
+  console.log("createQueueM args", {name, adminId, openTime, closeTime, maxRecordNumber})
+  return fetch(`${API_URL}/queues`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+      adminId,
+      openTime: new Date(openTime).toISOString(),
+      closeTime: new Date(closeTime).toISOString(),
+      isOpen: true,
+      maxRecordNumber,
+    }),
+  })
+    .then(res => res.json())
+}

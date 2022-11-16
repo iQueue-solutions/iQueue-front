@@ -1,8 +1,9 @@
 import {API_URL} from "../constants";
 
-export const getParticipants = (queueId) => {
-  return fetch(`${API_URL}/queues/${queueId}/participants`)
-    .then(response => response.json())
+export type Participant = {
+  id: string;
+  userId: string;
+  queueId: string;
 }
 
 export const createParticipant = (queueId, userId) => {

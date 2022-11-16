@@ -10,11 +10,15 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.6",
+    "@tanstack/react-query": "^4.16.1",
+    "@tanstack/react-query-devtools": "^4.16.1",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/node": "18.11.9",
+    "@types/react": "18.0.25",
     "autoprefixer": "^10.4.12",
     "eslint": "8.22.0",
     "eslint-config-next": "12.3.1",

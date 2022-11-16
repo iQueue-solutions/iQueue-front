@@ -4,9 +4,10 @@ import { useRouter } from "next/router";
 import { DropdownInput } from "../../components/DropdownInput";
 import { ChevronRightIcon, ArrowSmLeftIcon } from "@heroicons/react/outline";
 import { useContext, useEffect, useState } from "react";
-import { API_URL } from "../../constants";
 import { LayoutContext } from "../../components/Layout";
 import { Input } from "../../components/Input";
+import {useMutation} from "@tanstack/react-query";
+import {createQueue} from "../../fetchers/queues";
 
 const New = () => {
   const [maxPeople, setMaxPeople] = useState(0);
@@ -28,26 +29,12 @@ const New = () => {
 
   const router = useRouter();
 
-  function createQueue() {
-    fetch(`${API_URL}/queues`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: queueName,
-        adminId: user.id,
-        openTime: new Date(queueOpenTime).toISOString(),
-        closeTime: new Date(queueCloseTime).toISOString(),
-        isOpen: true,
-        maxRecordNumber: maxPeople,
-      }),
-    })
-      .then(res => res.json())
-      .then(id =>
+  const mutation = useMutation({
+    mutationFn: createQueue,
+    onSuccess: (id: string) => {
       router.push(`/queue/${id}`)
-    );
-  }
+    }
+  });
 
  const [minDate, setMinDate] = useState('');
   useEffect(() => {
@@ -78,7 +65,13 @@ const New = () => {
      icon={<ChevronRightIcon className="w-5 md:w-6" />}
      color="purple"
      variant="solid"
-     onClick={createQueue}
+     onClick={() => mutation.mutate({
+        name: queueName,
+        adminId: user.id,
+        openTime: queueOpenTime,
+        closeTime: queueCloseTime,
+        maxRecordNumber: maxPeople,
+     })}
     >
      Створити чергу
     </Button>

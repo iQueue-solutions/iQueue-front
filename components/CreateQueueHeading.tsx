@@ -1,6 +1,12 @@
+import React from "react";
 import { Heading } from "./Heading";
 
-export const CreateQueueHeading = ({ children, icon }) => {
+interface CreateQueueHeadingProps {
+  children: React.ReactNode;
+  icon?: React.ReactNode;
+}
+
+export const CreateQueueHeading = ({ children, icon }: CreateQueueHeadingProps) => {
  return (
   <>
    <div className="md:hidden text-purple-800 md:mt-1">

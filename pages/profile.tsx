@@ -1,31 +1,34 @@
-import { API_URL } from "../constants";
 import { CheckIcon } from "@heroicons/react/outline";
 import {useContext} from "react";
 import {LayoutContext} from "../components/Layout";
+import {dehydrate, QueryClient, useQuery} from "@tanstack/react-query";
+import {getUsers} from "../fetchers/users";
 
 export async function getServerSideProps() {
-  const response = await fetch(`${API_URL}/users`);
-  const users = await response.json();
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(['users'], getUsers);
 
  return {
   props: {
-   users: users,
+    dehydratedState: dehydrate(queryClient),
   },
  };
 }
 
-const Profile = ({ users }) => {
+const Profile = () => {
   const {user: contextUser, setUser} = useContext(LayoutContext);
+
+  const {data} = useQuery({queryKey: ['users'], queryFn: getUsers});
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-4xl md:text-8xl md:lowercase font-semibold md:font-light text-purple-800 mb-9">
         Профіль
       </h1>
       <div className="flex flex-col items-start">
-      {users.map((user, index) => (
+      {data.map((user, index) => (
         <div key={user.id} className="mb-2 text-xl font-semibold flex">
           <button className="p-2 bg-purple-800 text-slate-50 border-2 border-purple-800 hover:bg-slate-50 hover:text-purple-800 transition mr-1"
-           onClick={()=>setUser(users[index])}>
+           onClick={()=>setUser(data[index])}>
             <CheckIcon className="w-6" />
           </button>
           <div className="mt-2">
