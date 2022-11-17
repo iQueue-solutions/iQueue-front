@@ -8,7 +8,8 @@ import {useEffect, useState} from "react";
 import {AddToQueue} from "./AddToQueue";
 import {ConfirmQueueOpenBox, ConfirmQueueCloseBox} from "./ConfirmBox";
 import {Queue} from "../fetchers/queues";
-import {DateToQueueDate} from "../utlis";
+import {DateToQueueDate} from "../utils";
+import {useFlag} from "../utils/useFlag";
 
 export const QueueCreator = ({ Icon, children }) => {
   return (
@@ -65,17 +66,9 @@ interface QueueInfoProps {
   isAdmin: boolean;
 }
 export const QueueInfo = ({queueData, creator, isOpen, isParticipant, isAdmin}: QueueInfoProps) => {
-  const [isAddToQueue, setIsAddToQueue] = useState(false);
-  const showAddPeople = () => setIsAddToQueue(true);
-  const hideAddPeople = () => setIsAddToQueue(false);
-
-  const [setIsShowConfirmOpenQueue, setSetIsShowConfirmOpenQueue] = useState(false);
-  const showConfirmOpenQueue = () => setSetIsShowConfirmOpenQueue(true);
-  const hideConfirmOpenQueue = () => setSetIsShowConfirmOpenQueue(false);
-
-  const [setIsShowConfirmCloseQueue, setSetIsShowConfirmCloseQueue] = useState(false);
-  const showConfirmCloseQueue = () => setSetIsShowConfirmCloseQueue(true);
-  const hideConfirmCloseQueue = () => setSetIsShowConfirmCloseQueue(false);
+  const [isAddToQueue, showAddPeople, hideAddPeople] = useFlag();
+  const [isShowConfirmOpenQueue, showConfirmOpenQueue, hideConfirmOpenQueue] = useFlag();
+  const [isShowConfirmCloseQueue, showConfirmCloseQueue, hideConfirmCloseQueue] = useFlag();
 
  return (
    <div className="flex flex-col md:w-full font-semibold md:mt-2 mb-7 cursor-pointer items-center">
@@ -95,13 +88,13 @@ export const QueueInfo = ({queueData, creator, isOpen, isParticipant, isAdmin}: 
         {isOpen
           ? <>
              <QueueOptionsBtn Icon={LockOpenIcon} onClick={showConfirmCloseQueue}>Заблокувати</QueueOptionsBtn>
-              {setIsShowConfirmCloseQueue &&
+              {isShowConfirmCloseQueue &&
                 <ConfirmQueueCloseBox queueName={queueData.name} queueId={queueData.id} hideConfirm={hideConfirmCloseQueue} />
               }
           </>
           : <>
              <QueueOptionsBtn Icon={LockClosedIcon} onClick={showConfirmOpenQueue}>Розблокувати</QueueOptionsBtn>
-              {setIsShowConfirmOpenQueue &&
+              {isShowConfirmOpenQueue &&
                 <ConfirmQueueOpenBox queueName={queueData.name} queueId={queueData.id} hideConfirm={hideConfirmOpenQueue} />
               }
           </>
