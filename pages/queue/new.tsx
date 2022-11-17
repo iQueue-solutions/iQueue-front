@@ -5,7 +5,7 @@ import { DropdownInput } from "../../components/DropdownInput";
 import { ChevronRightIcon, ArrowSmLeftIcon } from "@heroicons/react/outline";
 import { useContext, useEffect, useState } from "react";
 import { LayoutContext } from "../../components/Layout";
-import { Input } from "../../components/Input";
+import {formatDate, Input} from "../../components/Input";
 import {useMutation} from "@tanstack/react-query";
 import {createQueue} from "../../fetchers/queues";
 
@@ -13,17 +13,11 @@ const New = () => {
   const [maxPeople, setMaxPeople] = useState(0);
   const [queueName, setQueueName] = useState('');
 
-  const formatDate = (date) => {
-    return new Date(date.toString().split('GMT')[0]+' UTC').toISOString().split(".")[0];
-  }
-
   let date = new Date();
-  const openTime = formatDate(date)
-  const [queueOpenTime, setQueueOpenTime] = useState(openTime);
+  const [queueOpenTime, setQueueOpenTime] = useState( formatDate(date));
 
   date.setDate(date.getDay())
-  const closeTime = formatDate(date)
-  const [queueCloseTime, setQueueCloseTime] = useState(closeTime);
+  const [queueCloseTime, setQueueCloseTime] = useState( formatDate(date) );
 
   const {user} = useContext(LayoutContext);
 

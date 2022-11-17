@@ -4,19 +4,30 @@ import {
   ShareIcon, ShieldExclamationIcon, ClockIcon,
   LockOpenIcon, LockClosedIcon, ArrowCircleLeftIcon
 } from "@heroicons/react/outline";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {AddToQueue} from "./AddToQueue";
+import {ConfirmQueueOpenBox, ConfirmQueueCloseBox} from "./ConfirmBox";
+import {Queue} from "../fetchers/queues";
+import {DateToQueueDate} from "../utlis";
 
 export const QueueCreator = ({ Icon, children }) => {
   return (
     <div className="text-slate-500 flex p-2 items-center">
-      <Icon className="w-6 md:w-7" />
+      {Icon && <Icon className="w-6 md:w-7" /> }
       <div className="ml-1 text-md md:text-lg font-semibold">{children}</div>
     </div>
   );
 };
 
-export const QueueTime = ({start, end}) => {
+export const QueueTime = ({startDate, endDate}) => {
+  const [start, setStart] = useState(DateToQueueDate(new Date(startDate)));
+  const [end, setEnd] = useState(DateToQueueDate(new Date(endDate)));
+
+  useEffect(() => {
+    setStart(DateToQueueDate(new Date(startDate)));
+    setEnd(DateToQueueDate(new Date(endDate)));
+  }, [startDate, endDate]);
+
   return(
     <>
     <div className="text-slate-500 flex p-2 md:hidden items-center">
@@ -46,16 +57,31 @@ export const QueueOptionsBtn = ({ Icon, onClick, children }) => {
   );
 }
 
-export const QueueInfo = ({creator, start, end, isOpen, isParticipant, isAdmin}) => {
+interface QueueInfoProps {
+  queueData: Queue;
+  creator: string;
+  isOpen: boolean;
+  isParticipant: boolean;
+  isAdmin: boolean;
+}
+export const QueueInfo = ({queueData, creator, isOpen, isParticipant, isAdmin}: QueueInfoProps) => {
   const [isAddToQueue, setIsAddToQueue] = useState(false);
   const showAddPeople = () => setIsAddToQueue(true);
   const hideAddPeople = () => setIsAddToQueue(false);
+
+  const [setIsShowConfirmOpenQueue, setSetIsShowConfirmOpenQueue] = useState(false);
+  const showConfirmOpenQueue = () => setSetIsShowConfirmOpenQueue(true);
+  const hideConfirmOpenQueue = () => setSetIsShowConfirmOpenQueue(false);
+
+  const [setIsShowConfirmCloseQueue, setSetIsShowConfirmCloseQueue] = useState(false);
+  const showConfirmCloseQueue = () => setSetIsShowConfirmCloseQueue(true);
+  const hideConfirmCloseQueue = () => setSetIsShowConfirmCloseQueue(false);
 
  return (
    <div className="flex flex-col md:w-full font-semibold md:mt-2 mb-7 cursor-pointer items-center">
     <div className="flex md:flex-col justify-between w-full">
       <QueueCreator Icon={ShieldExclamationIcon}>{creator}</QueueCreator>
-      <QueueTime start={start} end={end} />
+      <QueueTime startDate={queueData.openTime} endDate={queueData.closeTime} />
     </div>
     <div className="text-purple-800 flex md:flex-col md:w-full">
       <QueueOptionsBtn Icon={ShareIcon}>Поділитися</QueueOptionsBtn>
@@ -67,8 +93,18 @@ export const QueueInfo = ({creator, start, end, isOpen, isParticipant, isAdmin})
         <QueueOptionsBtn Icon={UserAddIcon} onClick={showAddPeople}>Додати</QueueOptionsBtn>
         <QueueOptionsBtn Icon={CogIcon}>Налаштування</QueueOptionsBtn>
         {isOpen
-          ? <QueueOptionsBtn Icon={LockOpenIcon}>Заблокувати</QueueOptionsBtn>
-          : <QueueOptionsBtn Icon={LockClosedIcon}>Розблокувати</QueueOptionsBtn>
+          ? <>
+             <QueueOptionsBtn Icon={LockOpenIcon} onClick={showConfirmCloseQueue}>Заблокувати</QueueOptionsBtn>
+              {setIsShowConfirmCloseQueue &&
+                <ConfirmQueueCloseBox queueName={queueData.name} queueId={queueData.id} hideConfirm={hideConfirmCloseQueue} />
+              }
+          </>
+          : <>
+             <QueueOptionsBtn Icon={LockClosedIcon} onClick={showConfirmOpenQueue}>Розблокувати</QueueOptionsBtn>
+              {setIsShowConfirmOpenQueue &&
+                <ConfirmQueueOpenBox queueName={queueData.name} queueId={queueData.id} hideConfirm={hideConfirmOpenQueue} />
+              }
+          </>
         }
         <QueueOptionsBtn Icon={TrashIcon}>Видалити</QueueOptionsBtn>
       </>}

@@ -2,8 +2,7 @@ import { QueueInfo } from "../../components/QueueInfo";
 import { QueueMembers } from "../../components/QueueMembers";
 import { CreateQueueHeading } from "../../components/CreateQueueHeading";
 import { API_URL } from "../../constants";
-import { DateToQueueDate } from "../../utlis";
-import {useState, useEffect, useContext, useRef} from "react";
+import {useState, useEffect, useContext} from "react";
 import { createParticipant } from "../../fetchers/participants";
 import { LayoutContext } from "../../components/Layout";
 import { useRouter } from "next/router";
@@ -45,8 +44,6 @@ const Id = ({ queueId }) => {
 
  const [isParticipant, setIsParticipant] = useState(true);
 
- const start = useRef(DateToQueueDate(new Date(queueData.openTime)));
- const end = useRef(DateToQueueDate(new Date(queueData.closeTime)));
  const [creator, setCreator] = useState('...');
  const [isAdmin, setIsAdmin] = useState(false);
 
@@ -96,7 +93,9 @@ const Id = ({ queueId }) => {
     <CreateQueueHeading>{queueData.name}</CreateQueueHeading>
     <div className="md:flex w-full mt-5 hidden">
      <div className="basis-1/5 px-10">
-      <QueueInfo creator={creator} start={start.current} end={end.current} isOpen={queueData.isOpen} isParticipant={isParticipant} isAdmin={isAdmin} />
+      <QueueInfo queueData={queueData} creator={creator} isOpen={queueData.isOpen} isParticipant={isParticipant} isAdmin={isAdmin} />
+      {/*<QueueInfo onClose={() => {*/}
+      {/*}} creator={creator} start={start.current} end={end.current} isOpen={queueData.isOpen} isParticipant={isParticipant} isAdmin={isAdmin} />*/}
      </div>
      <div className="basis-3/5">
       <QueueMembers />
@@ -104,7 +103,10 @@ const Id = ({ queueId }) => {
      <div className="basis-1/5 px-10"></div>
     </div>
     <div className="md:hidden">
-     <QueueInfo creator={creator} start={start.current} end={end.current} isOpen={queueData.isOpen} isParticipant={isParticipant} isAdmin={isAdmin} />
+     <QueueInfo queueData={queueData} creator={creator} isOpen={queueData.isOpen} isParticipant={isParticipant} isAdmin={isAdmin} />
+     {/*<QueueInfo onClose={() => {*/}
+     {/* closeQueueMutation.mutate({id: queueData.id, userId: adminData.id});*/}
+     {/*}} creator={creator} start={start.current} end={end.current} isOpen={queueData.isOpen} isParticipant={isParticipant} isAdmin={isAdmin} />*/}
      <QueueMembers />
     </div>
    </div>

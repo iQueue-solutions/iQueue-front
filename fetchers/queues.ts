@@ -43,3 +43,39 @@ export const createQueue = async ({name, adminId, openTime, closeTime, maxRecord
   })
     .then(res => res.json())
 }
+
+interface closeQueueArgs {
+  id: string;
+  userId: string;
+}
+
+interface openQueueArgs extends closeQueueArgs {
+  openTime: string;
+}
+
+export const openQueue = async ({id, userId, openTime} : openQueueArgs): Promise<string> => {
+  return fetch(`${API_URL}/queues/${id}/open`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId,
+      closeTime: new Date(openTime).toISOString(),
+    }),
+  })
+    .then(_ => `queue ${id} opened`)
+}
+
+export const closeQueue = async ({id, userId} : closeQueueArgs): Promise<string> => {
+  return fetch(`${API_URL}/queues/${id}/close`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId,
+    }),
+  })
+    .then(_ => `queue ${id} closed`)
+}
