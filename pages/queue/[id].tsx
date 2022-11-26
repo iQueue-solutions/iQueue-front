@@ -93,9 +93,7 @@ const Id = ({ queueId }) => {
     <CreateQueueHeading>{queueData.name}</CreateQueueHeading>
     <div className="md:flex w-full mt-5 hidden">
      <div className="basis-1/5 px-10">
-      <QueueInfo queueData={queueData} creator={creator} isOpen={queueData.isOpen} isParticipant={isParticipant} isAdmin={isAdmin} />
-      {/*<QueueInfo onClose={() => {*/}
-      {/*}} creator={creator} start={start.current} end={end.current} isOpen={queueData.isOpen} isParticipant={isParticipant} isAdmin={isAdmin} />*/}
+      <QueueInfo queueData={queueData} creator={creator} isParticipant={isParticipant} isAdmin={isAdmin} />
      </div>
      <div className="basis-3/5">
       <QueueMembers />
@@ -103,10 +101,7 @@ const Id = ({ queueId }) => {
      <div className="basis-1/5 px-10"></div>
     </div>
     <div className="md:hidden">
-     <QueueInfo queueData={queueData} creator={creator} isOpen={queueData.isOpen} isParticipant={isParticipant} isAdmin={isAdmin} />
-     {/*<QueueInfo onClose={() => {*/}
-     {/* closeQueueMutation.mutate({id: queueData.id, userId: adminData.id});*/}
-     {/*}} creator={creator} start={start.current} end={end.current} isOpen={queueData.isOpen} isParticipant={isParticipant} isAdmin={isAdmin} />*/}
+     <QueueInfo queueData={queueData} creator={creator} isParticipant={isParticipant} isAdmin={isAdmin} />
      <QueueMembers />
     </div>
    </div>

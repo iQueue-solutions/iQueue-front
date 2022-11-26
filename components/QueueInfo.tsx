@@ -61,11 +61,10 @@ export const QueueOptionsBtn = ({ Icon, onClick, children }) => {
 interface QueueInfoProps {
   queueData: Queue;
   creator: string;
-  isOpen: boolean;
   isParticipant: boolean;
   isAdmin: boolean;
 }
-export const QueueInfo = ({queueData, creator, isOpen, isParticipant, isAdmin}: QueueInfoProps) => {
+export const QueueInfo = ({queueData, creator, isParticipant, isAdmin}: QueueInfoProps) => {
   const [isAddToQueue, showAddPeople, hideAddPeople] = useFlag();
   const [isShowConfirmOpenQueue, showConfirmOpenQueue, hideConfirmOpenQueue] = useFlag();
   const [isShowConfirmCloseQueue, showConfirmCloseQueue, hideConfirmCloseQueue] = useFlag();
@@ -85,7 +84,7 @@ export const QueueInfo = ({queueData, creator, isOpen, isParticipant, isAdmin}: 
         <hr className="my-4 mx-auto w-40 h-1 bg-gray-200 sm:hidden md:block" />
         <QueueOptionsBtn Icon={UserAddIcon} onClick={showAddPeople}>Додати</QueueOptionsBtn>
         <QueueOptionsBtn Icon={CogIcon}>Налаштування</QueueOptionsBtn>
-        {isOpen
+        {queueData.isOpen
           ? <>
              <QueueOptionsBtn Icon={LockOpenIcon} onClick={showConfirmCloseQueue}>Заблокувати</QueueOptionsBtn>
               {isShowConfirmCloseQueue &&
