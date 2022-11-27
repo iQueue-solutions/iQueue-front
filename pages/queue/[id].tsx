@@ -3,9 +3,7 @@ import { QueueMembers } from "../../components/QueueMembers";
 import { CreateQueueHeading } from "../../components/CreateQueueHeading";
 import { API_URL } from "../../constants";
 import {useState, useEffect, useContext} from "react";
-import { createParticipant } from "../../fetchers/participants";
 import { LayoutContext } from "../../components/Layout";
-import { useRouter } from "next/router";
 import {QueueNotificationClosed, QueueNotificationJoin} from "../../components/QueueNotification";
 import {dehydrate, QueryClient, useQuery} from "@tanstack/react-query";
 import {getUser} from "../../fetchers/users";
@@ -33,8 +31,6 @@ export const getServerSideProps = async (ctx) => {
 };
 
 const Id = ({ queueId }) => {
- const router = useRouter();
-
  const {data: queueData} = useQuery({queryKey: ['queues', queueId], queryFn: () => getQueue(queueId)});
  const {data: adminData} = useQuery({
   queryKey: ['users', queueData.adminId],
@@ -70,25 +66,12 @@ const Id = ({ queueId }) => {
   setIsParticipant(_isParticipant);
  }, [queueData, user.id]);
 
- const onAddParticipant = () => {
-  createParticipant(queueData.id, user.id).then((response) => {
-   if (response.ok) {
-    router.reload();
-   }
-  });
- };
-
- const onAddParticipantCancel = () => router.push("/");
-
  return (
   <div className="flex justify-center">
    <div className="flex flex-col w-11/12 items-center">
     {!queueData.isOpen && <QueueNotificationClosed />}
     {(queueData.isOpen && !isParticipant) && (
-     <QueueNotificationJoin
-      onConfirm={onAddParticipant}
-      onCancel={onAddParticipantCancel}
-     />
+     <QueueNotificationJoin queueId={queueData.id} userId={user.id} />
     )}
     <CreateQueueHeading>{queueData.name}</CreateQueueHeading>
     <div className="md:flex w-full mt-5 hidden">
