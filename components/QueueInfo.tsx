@@ -101,7 +101,7 @@ export const QueueInfo = ({queueData, creator, isParticipant, isAdmin}: QueueInf
         <QueueOptionsBtn Icon={TrashIcon}>Видалити</QueueOptionsBtn>
       </>}
     </div>
-     {isAddToQueue && <AddToQueue onClose={hideAddPeople} />}
+     {isAddToQueue && <AddToQueue queueId={queueData.id} onClose={hideAddPeople} />}
    </div>
  );
 };
