@@ -1,13 +1,39 @@
-import { XIcon, XCircleIcon, CheckCircleIcon } from "@heroicons/react/outline";
+import { XIcon, PlusCircleIcon } from "@heroicons/react/outline";
 import { Button } from "./Button";
-import {useQuery} from "@tanstack/react-query";
-import {getUsers} from "../fetchers/users";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import {getUsers, User} from "../fetchers/users";
 import {getQueue} from "../fetchers/queues";
-import {useMemo} from "react";
+import React, {useContext, useEffect, useMemo, useState} from "react";
+import {createParticipants} from "../fetchers/participants";
+
+interface PreParticipantProps {
+  user: User;
+}
+const PreParticipant = ({ user }: PreParticipantProps) => {
+
+  const [isChecked, setChecked] = useState(false);
+  const usersMap = useContext(PreParticipantsContext);
+
+  function onChecked() {
+    setChecked(c => {
+      usersMap.set(user.id, !c);
+      return !c;
+    });
+  }
+
+  return (
+    <div className="flex md:w-1/4" key={`pre-participant-${user.id}`}>
+      <PlusCircleIcon className={`w-6 ${isChecked ? 'text-green-400 hover:text-green-600' : 'text-gray-400 hover:text-gray-600'}`} onClick={onChecked} />
+      <div className="pl-1 w-3/4 text-gray-700">{user.lastName} {user.firstName}</div>
+    </div>
+  )
+}
+
+const PreParticipantsContext = React.createContext(new Map<string, boolean>());
 
 export const AddToQueue = ({ queueId, onClose }) => {
   const {data: users} = useQuery({queryKey: ['users'], queryFn: getUsers});
-  const {data: queueData} = useQuery({queryKey: ['queues', queueId], queryFn: () => getQueue(queueId)});
+  const {data: queueData, refetch: refetchQueueData} = useQuery({queryKey: ['queues', queueId], queryFn: () => getQueue(queueId)});
 
   const nonParticipants = useMemo(() => {
     if (!users || !queueData) {
@@ -20,6 +46,35 @@ export const AddToQueue = ({ queueId, onClose }) => {
     });
   }, [users, queueData]);
 
+  const usersMap = useContext(PreParticipantsContext);
+
+  useEffect(() => {
+    for (const user of nonParticipants) {
+      usersMap.set(user.id, false);
+    }
+  }, [nonParticipants]);
+
+  const mutation = useMutation({
+    mutationFn: createParticipants,
+    onSuccess: () => {
+      onClose();
+      refetchQueueData();
+    }
+  });
+
+  function onSubmit() {
+    const participants = [];
+    for (const [userId, isChecked] of usersMap) {
+      if (isChecked) {
+        participants.push(userId);
+      }
+    }
+    mutation.mutate({
+      queueId,
+      userIds: participants
+    });
+  }
+
  return (
   <div className="bg-blue-300 z-10 flex flex-col items-center fixed rounded-lg w-[330px] md:w-[1100px] h-[500px] md:h-[600px] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-55%] drop-shadow-2xl">
    <XIcon
@@ -30,21 +85,14 @@ export const AddToQueue = ({ queueId, onClose }) => {
     <h1 className="text-2xl md:text-4xl font-bold pt-2 pb-1">
      Додати до черги
     </h1>
-    <h2 className="text-xl md:text-2xl font-semibold pb-5">{queueData?.name}</h2>
+    <h2 className="text-xl md:text-2xl text-gray-400 font-semibold pb-5">{queueData?.name}</h2>
     <div className="flex flex-col overflow-scroll overflow-x-hidden md:overflow-hidden w-full md:flex-wrap md:items-center">
-      <div className="flex md:w-1/4">
-      <XCircleIcon className="w-6 text-red-400 hover:text-red-700" />
-      <div className="pl-1 w-3/4">Костікова Олеся</div>
-     </div>
       {nonParticipants?.map((user) => (
-        <div className="flex md:w-1/4" key={`pre-participant-${user.id}`}>
-          <CheckCircleIcon className="w-6 text-green-400 hover:text-green-700" />
-          <div className="pl-1 w-3/4">{user.lastName} {user.firstName}</div>
-        </div>
+        <PreParticipant user={user} key={`pre-participant-${user.id}`} />
       ))}
     </div>
    </div>
-   <Button color="purple" variant="solid" margin={2}>
+   <Button color="purple" variant="solid" margin={2} onClick={onSubmit}>
     {"Підтвердити"}
    </Button>
   </div>
