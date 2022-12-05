@@ -1,4 +1,4 @@
-import {EmptyPlace, OccupiedPlace} from "./QueueMember";
+import {EmptyPlace, MyPlace, StrangerPlace} from "./QueueMember";
 import {useContext, useMemo } from "react";
 import {useQuery} from "@tanstack/react-query";
 import {getRecords} from "../fetchers/records";
@@ -17,7 +17,7 @@ const additionalEmptyMembers = () => {
 
 export const QueueMembers = ({queueId}) => {
   const { user } = useContext(LayoutContext);
-  const {data} = useQuery({queryKey: ['records', queueId], queryFn: () => getRecords(queueId) });
+  const {data, refetch} = useQuery({queryKey: ['records', queueId], queryFn: () => getRecords(queueId) });
 
   const membersList = useMemo(() => {
     const members = [];
@@ -51,15 +51,17 @@ export const QueueMembers = ({queueId}) => {
   return (
     <div className="pb-[4rem] md:pb-0">
       {membersList?.map(({ id, isEmpty=false, userId, labNumber}, index) => {
-       const variant = {
-         isMe: user.id === userId,
-         isInQueue,
-       };
-       return isEmpty ? (
-         <EmptyPlace key={id} index={index} callback={() => console.log("Empty place")} />
-       ) : (
-         <OccupiedPlace key={id} index={index}  variant={variant} userId={userId} work={labNumber} />
-       );
+        const isMe = user.id === userId;
+
+        if (isEmpty) {
+          return <EmptyPlace key={`empty-${id}`} index={index} callback={() => console.log("Empty place")}/>
+        } else {
+          if (isMe) {
+            return <MyPlace key={`my-${id}`} index={index} userId={userId} recordId={id} work={labNumber} refetchRecords={refetch} />
+          } else {
+            return <StrangerPlace key={`stranger-${id}`} index={index} userId={userId} work={labNumber} isInQueue={isInQueue} />
+         }
+        }
       })}
     </div>
   );

@@ -14,7 +14,12 @@ export const getRecords = async (queueId: string): Promise<Record[]> => {
       .then(response => response.json())
 }
 
-export const createRecord = (index, participantId, labNumber=''): Promise<String> => {
+interface createRecordParams {
+  index: number;
+  participantId: string;
+  labNumber?: string;
+}
+export const createRecord = ({index, participantId, labNumber=''}: createRecordParams): Promise<String> => {
   return fetch(`${API_URL}/records`, {
     method: 'POST',
     headers: {
@@ -25,6 +30,13 @@ export const createRecord = (index, participantId, labNumber=''): Promise<String
       participantId,
       labNumber
     })
+  })
+    .then(response => response.json())
+}
+
+export const removeRecord = ({recordId}): Promise<String> => {
+  return fetch(`${API_URL}/records/${recordId}`, {
+    method: 'DELETE',
   })
     .then(_ => 'ok')
 }

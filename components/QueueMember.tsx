@@ -2,14 +2,16 @@ import { XIcon, PlusIcon } from "@heroicons/react/outline";
 import { Swap } from "./Icons";
 import { useState } from "react";
 import { ConfirmQueueMember } from "./ConfirmQueueMember";
-import {useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import {getUser} from "../fetchers/users";
+import {removeRecord} from "../fetchers/records";
 
-export const OccupiedPlace = ({
+const OccupiedPlace = ({
                                 index,
                                 variant: { isMe, isInQueue },
                                 userId,
                                 work,
+                                onModalConfirm,
                               }) => {
   const {data: userData} = useQuery({
     queryKey: ['users', userId],
@@ -24,11 +26,16 @@ export const OccupiedPlace = ({
   const openQuestion = () => setIsQuestion(true);
   const closeQuestion = () => setIsQuestion(false);
 
+  const onConfirm = () => {
+    onModalConfirm();
+    closeQuestion();
+  }
+
   if (isQuestion)
     return (
       <ConfirmQueueMember
         title={question}
-        onConfirm={closeQuestion}
+        onConfirm={onConfirm}
         onCancel={closeQuestion}
       />
     );
@@ -58,6 +65,27 @@ export const OccupiedPlace = ({
     </div>
   );
 };
+
+export const MyPlace = ({ index, userId, recordId, work, refetchRecords }) => {
+  const mutation = useMutation({
+    mutationFn: removeRecord,
+    onSuccess: () => {
+      refetchRecords();
+    }
+  });
+
+  const onLeaveQueue = () => mutation.mutate({recordId});
+
+  return (
+    <OccupiedPlace {...{ index, userId, work }} variant={{ isMe: true, isInQueue: true }} onModalConfirm={onLeaveQueue} />
+  );
+}
+
+export const StrangerPlace = ({ index, userId, work, isInQueue }) => {
+  return (
+    <OccupiedPlace {...{ index, userId, work }} variant={{ isMe: false, isInQueue }} />
+  );
+}
 
 export const EmptyPlace = ({ index, callback }) => {
   const [isQuestion, setIsQuestion] = useState(false);
