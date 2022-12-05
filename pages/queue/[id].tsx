@@ -79,13 +79,13 @@ const Id = ({ queueId }) => {
       <QueueInfo queueData={queueData} creator={creator} isParticipant={isParticipant} isAdmin={isAdmin} />
      </div>
      <div className="basis-3/5">
-      <QueueMembers />
+      <QueueMembers queueId={queueId} />
      </div>
      <div className="basis-1/5 px-10"></div>
     </div>
     <div className="md:hidden">
      <QueueInfo queueData={queueData} creator={creator} isParticipant={isParticipant} isAdmin={isAdmin} />
-     <QueueMembers />
+     <QueueMembers  queueId={queueId}/>
     </div>
    </div>
   </div>
