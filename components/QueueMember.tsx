@@ -4,7 +4,8 @@ import { useState } from "react";
 import { ConfirmQueueMember } from "./ConfirmQueueMember";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {getUser} from "../fetchers/users";
-import {removeRecord} from "../fetchers/records";
+import {createRecord, removeRecord} from "../fetchers/records";
+import {useRouter} from "next/router";
 
 const OccupiedPlace = ({
                                 index,
@@ -87,18 +88,33 @@ export const StrangerPlace = ({ index, userId, work, isInQueue }) => {
   );
 }
 
-export const EmptyPlace = ({ index, callback }) => {
+export const EmptyPlace = ({ index, participantId }) => {
   const [isQuestion, setIsQuestion] = useState(false);
   const [lab, setLab] = useState('');
 
   const openQuestion = () => setIsQuestion(true);
   const closeQuestion = () => setIsQuestion(false);
 
+  const router = useRouter();
+
+  const mutation = useMutation({
+    mutationFn: createRecord,
+    onSuccess: () => {
+      router.reload();
+    }
+  });
+
+  const onJoinQueue = () => mutation.mutate({
+    index: index,
+    participantId,
+    labNumber: lab,
+  });
+
   if (isQuestion)
     return (
       <ConfirmQueueMember
         title="Зайняти чергу?"
-        onConfirm={() => callback(index)}
+        onConfirm={onJoinQueue}
         onCancel={closeQuestion}
         isInput
         inputValue={lab}

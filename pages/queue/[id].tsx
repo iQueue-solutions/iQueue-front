@@ -2,7 +2,7 @@ import { QueueInfo } from "../../components/QueueInfo";
 import { QueueMembers } from "../../components/QueueMembers";
 import { CreateQueueHeading } from "../../components/CreateQueueHeading";
 import { API_URL } from "../../constants";
-import {useState, useEffect, useContext} from "react";
+import {useState, useEffect, useContext, useMemo} from "react";
 import { LayoutContext } from "../../components/Layout";
 import {QueueNotificationClosed, QueueNotificationJoin} from "../../components/QueueNotification";
 import {dehydrate, QueryClient, useQuery} from "@tanstack/react-query";
@@ -66,6 +66,14 @@ const Id = ({ queueId }) => {
   setIsParticipant(_isParticipant);
  }, [queueData, user.id]);
 
+ const participantId = useMemo(() => {
+  if (queueData) {
+    const participant = queueData.participants.find(p => p.userId === user.id);
+    return participant?.id;
+  }
+  return null;
+ } , [queueData, user]);
+
  return (
   <div className="flex justify-center">
    <div className="flex flex-col w-11/12 items-center">
@@ -79,13 +87,13 @@ const Id = ({ queueId }) => {
       <QueueInfo queueData={queueData} creator={creator} isParticipant={isParticipant} isAdmin={isAdmin} />
      </div>
      <div className="basis-3/5">
-      <QueueMembers queueId={queueId} />
+      <QueueMembers queueId={queueId} participantId={participantId} />
      </div>
      <div className="basis-1/5 px-10"></div>
     </div>
     <div className="md:hidden">
      <QueueInfo queueData={queueData} creator={creator} isParticipant={isParticipant} isAdmin={isAdmin} />
-     <QueueMembers  queueId={queueId}/>
+     <QueueMembers  queueId={queueId} participantId={participantId} />
     </div>
    </div>
   </div>

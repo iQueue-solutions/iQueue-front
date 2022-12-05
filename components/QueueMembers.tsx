@@ -15,7 +15,7 @@ const additionalEmptyMembers = () => {
   return emptyMembers;
 }
 
-export const QueueMembers = ({queueId}) => {
+export const QueueMembers = ({queueId, participantId}) => {
   const { user } = useContext(LayoutContext);
   const {data, refetch} = useQuery({queryKey: ['records', queueId], queryFn: () => getRecords(queueId) });
 
@@ -54,7 +54,7 @@ export const QueueMembers = ({queueId}) => {
         const isMe = user.id === userId;
 
         if (isEmpty) {
-          return <EmptyPlace key={`empty-${id}`} index={index} callback={() => console.log("Empty place")}/>
+          return <EmptyPlace key={`empty-${id}`} participantId={participantId} index={index} />
         } else {
           if (isMe) {
             return <MyPlace key={`my-${id}`} index={index} userId={userId} recordId={id} work={labNumber} refetchRecords={refetch} />
