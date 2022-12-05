@@ -124,14 +124,18 @@ export const EmptyPlace = ({ index, participantId }) => {
 
   return (
     <div
-      className="w-full cursor-pointer bg-slate-300 h-[100px] rounded-xl mb-3 hover:bg-blue-300 transition text-slate-500 hover:text-slate-900"
-      onClick={openQuestion}
+      className={`w-full cursor-pointer bg-slate-300 h-[100px] rounded-xl mb-3 text-slate-500
+        ${participantId && "transition hover:bg-blue-300 hover:text-slate-900"}
+      `}
+      onClick={participantId && openQuestion}
     >
       <div className="flex justify-between px-5 py-3 font-semibold">
         <h1 className="text-xl md:text-2xl">
           {`#${index + 1}`} - <u>Вільне місце</u>
         </h1>
-        <PlusIcon className="w-6" />
+        {participantId && (
+          <PlusIcon className="w-6" />
+        )}
       </div>
     </div>
   );
