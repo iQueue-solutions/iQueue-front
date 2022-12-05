@@ -21,8 +21,8 @@ const OccupiedPlace = ({
 
   const [isQuestion, setIsQuestion] = useState(false);
   const [question] = useState(
-    isMe ? "Залишити чергу?" : `Помінятись з ${name}?`
-  );
+    isMe ? "Залишити чергу?" : `Помінятись з ${userData?.firstName}?`
+);
 
   const openQuestion = () => setIsQuestion(true);
   const closeQuestion = () => setIsQuestion(false);
@@ -117,6 +117,7 @@ export const EmptyPlace = ({ index, participantId }) => {
         onConfirm={onJoinQueue}
         onCancel={closeQuestion}
         isInput
+        isInputRequired
         inputValue={lab}
         setInputValue={setLab}
       />

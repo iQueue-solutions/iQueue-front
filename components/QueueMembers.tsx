@@ -23,11 +23,13 @@ export const QueueMembers = ({queueId, participantId}) => {
     const members = [];
 
     if (data?.length) {
+      // put records in members list
       for (const record of data) {
         members[record.index] = record;
       }
 
-      const lastElement = data[data.length - 1];
+      // fill empty places with additional empty members
+      const lastElement = members[members.length - 1];
       for (let i = 0; i < lastElement.index; i++) {
         if (!members[i]) {
           members[i] = {
