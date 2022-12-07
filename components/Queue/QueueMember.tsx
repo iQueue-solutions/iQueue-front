@@ -1,10 +1,10 @@
 import { XIcon, PlusIcon } from "@heroicons/react/outline";
-import { Swap } from "./Icons";
+import { Swap } from "../Icons";
 import { useState } from "react";
-import { ConfirmQueueMember } from "./ConfirmQueueMember";
+import { ConfirmQueueMember } from "../Confirm/ConfirmQueueMember";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {getUser} from "../fetchers/users";
-import {createRecord, removeRecord} from "../fetchers/records";
+import {getUser} from "../../fetchers/users";
+import {createRecord, removeRecord} from "../../fetchers/records";
 import {useRouter} from "next/router";
 
 const OccupiedPlace = ({

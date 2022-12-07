@@ -1,7 +1,7 @@
 import { Heading } from "../components/Heading";
 import { Input } from "../components/Input";
 import { PageSwitcher } from "../components/PageSwitcher";
-import { Queue } from "../components/Queue";
+import { Queue } from "../components/Queue/Queue";
 import {useRouter} from "next/router";
 import {useMemo, useState} from "react";
 import {dehydrate, QueryClient, useQueries, useQuery} from "@tanstack/react-query";

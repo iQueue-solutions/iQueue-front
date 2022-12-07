@@ -5,11 +5,11 @@ import {
   LockOpenIcon, LockClosedIcon, ArrowCircleLeftIcon
 } from "@heroicons/react/outline";
 import {useEffect, useState} from "react";
-import {AddToQueue} from "./AddToQueue";
-import {ConfirmQueueOpenBox, ConfirmQueueCloseBox} from "./ConfirmBox";
-import {Queue} from "../fetchers/queues";
-import {DateToQueueDate} from "../utils";
-import {useFlag} from "../utils/useFlag";
+import {AddToQueue} from "../Confirm/AddToQueue";
+import {ConfirmQueueOpenBox, ConfirmQueueCloseBox} from "../Confirm/ConfirmBox";
+import {Queue} from "../../fetchers/queues";
+import {DateToQueueDate} from "../../utils";
+import {useFlag} from "../../utils/useFlag";
 
 export const QueueCreator = ({ Icon, children }) => {
   return (

@@ -1,10 +1,10 @@
 import { XIcon, PlusCircleIcon } from "@heroicons/react/outline";
-import { Button } from "./Button";
+import { Button } from "../Button";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {getUsers, User} from "../fetchers/users";
-import {getQueue} from "../fetchers/queues";
+import {getUsers, User} from "../../fetchers/users";
+import {getQueue} from "../../fetchers/queues";
 import React, {useContext, useEffect, useMemo, useState} from "react";
-import {createParticipants} from "../fetchers/participants";
+import {createParticipants} from "../../fetchers/participants";
 
 interface PreParticipantProps {
   user: User;

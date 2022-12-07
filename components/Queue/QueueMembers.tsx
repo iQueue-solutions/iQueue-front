@@ -1,8 +1,8 @@
 import {EmptyPlace, MyPlace, StrangerPlace} from "./QueueMember";
 import {useContext, useMemo } from "react";
 import {useQuery} from "@tanstack/react-query";
-import {getRecords} from "../fetchers/records";
-import {LayoutContext} from "./Layout";
+import {getRecords} from "../../fetchers/records";
+import {LayoutContext} from "../Layout/Layout";
 
 const additionalEmptyMembers = () => {
   const emptyMembers = [];

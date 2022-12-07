@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
-import styles from "../styles/Layout.module.css";
-import {useLocalStorage} from "../utils/useLocalStorage";
+import styles from "../../styles/Layout.module.css";
+import {useLocalStorage} from "../../utils/useLocalStorage";
 import Head from "next/head";
 
 export const LayoutContext = React.createContext(undefined);

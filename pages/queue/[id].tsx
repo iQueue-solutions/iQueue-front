@@ -1,10 +1,10 @@
-import { QueueInfo } from "../../components/QueueInfo";
-import { QueueMembers } from "../../components/QueueMembers";
+import { QueueInfo } from "../../components/Queue/QueueInfo";
+import { QueueMembers } from "../../components/Queue/QueueMembers";
 import { CreateQueueHeading } from "../../components/CreateQueueHeading";
 import { API_URL } from "../../constants";
 import {useState, useEffect, useContext, useMemo} from "react";
-import { LayoutContext } from "../../components/Layout";
-import {QueueNotificationClosed, QueueNotificationJoin} from "../../components/QueueNotification";
+import { LayoutContext } from "../../components/Layout/Layout";
+import {QueueNotificationClosed, QueueNotificationJoin} from "../../components/Confirm/QueueNotification";
 import {dehydrate, QueryClient, useQuery} from "@tanstack/react-query";
 import {getUser} from "../../fetchers/users";
 import {getQueue, Queue} from "../../fetchers/queues";

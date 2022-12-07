@@ -1,4 +1,4 @@
-import { AddToQueue } from "../components/AddToQueue";
+import { AddToQueue } from "../components/Confirm/AddToQueue";
 import {Heading} from "../components/Heading";
 
 export default function Custom404() {

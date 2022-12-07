@@ -1,7 +1,7 @@
 import { CheckIcon, XIcon, LockClosedIcon } from "@heroicons/react/outline";
 import {useQuery, useMutation} from "@tanstack/react-query";
-import {createParticipant} from "../fetchers/participants";
-import {getQueue} from "../fetchers/queues";
+import {createParticipant} from "../../fetchers/participants";
+import {getQueue} from "../../fetchers/queues";
 import {useRouter} from "next/router";
 
 export const QueueNotificationJoin = ({queueId, userId}) => {

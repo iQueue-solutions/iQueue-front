@@ -1,9 +1,9 @@
 import { CheckIcon, XIcon } from "@heroicons/react/outline";
-import {DateInput} from "./Input";
+import {DateInput} from "../Input";
 import {useState} from "react";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {closeQueue, getQueue, openQueue} from "../fetchers/queues";
-import {getUser} from "../fetchers/users";
+import {closeQueue, getQueue, openQueue} from "../../fetchers/queues";
+import {getUser} from "../../fetchers/users";
 
 interface ConfirmBoxProps {
   question: string;

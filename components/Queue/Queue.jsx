@@ -1,5 +1,5 @@
 import { CogIcon } from "@heroicons/react/outline";
-import styles from "../styles/Queue.module.css";
+import styles from "../../styles/Queue.module.css";
 
 export const Queue = ({ name, creatorName, isMy, onClick }) => {
  return (
