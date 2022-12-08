@@ -5,7 +5,6 @@ import { ConfirmQueueMember } from "../Confirm/ConfirmQueueMember";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {getUser} from "../../fetchers/users";
 import {createRecord, removeRecord} from "../../fetchers/records";
-import {useRouter} from "next/router";
 
 const OccupiedPlace = ({
                                 index,
@@ -88,19 +87,22 @@ export const StrangerPlace = ({ index, userId, work, isInQueue }) => {
   );
 }
 
-export const EmptyPlace = ({ index, participantId }) => {
+interface EmptyPlaceProps {
+  index: number;
+  participantId: string;
+  refetchRecords: () => void;
+}
+export const EmptyPlace = ({ index, participantId, refetchRecords }: EmptyPlaceProps) => {
   const [isQuestion, setIsQuestion] = useState(false);
   const [lab, setLab] = useState('');
 
   const openQuestion = () => setIsQuestion(true);
   const closeQuestion = () => setIsQuestion(false);
 
-  const router = useRouter();
-
   const mutation = useMutation({
     mutationFn: createRecord,
     onSuccess: () => {
-      router.reload();
+      refetchRecords();
     }
   });
 

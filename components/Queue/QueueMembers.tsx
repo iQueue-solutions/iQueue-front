@@ -56,12 +56,12 @@ export const QueueMembers = ({queueId, participantId}) => {
         const isMe = user.id === userId;
 
         if (isEmpty) {
-          return <EmptyPlace key={`empty-${id}`} participantId={participantId} index={index} />
+          return <EmptyPlace key={`record-${index}`} participantId={participantId} index={index} refetchRecords={refetch} />
         } else {
           if (isMe) {
-            return <MyPlace key={`my-${id}`} index={index} userId={userId} recordId={id} work={labNumber} refetchRecords={refetch} />
+            return <MyPlace key={`record-${index}`} index={index} userId={userId} recordId={id} work={labNumber} refetchRecords={refetch} />
           } else {
-            return <StrangerPlace key={`stranger-${id}`} index={index} userId={userId} work={labNumber} isInQueue={isInQueue} />
+            return <StrangerPlace key={`record-${index}`} index={index} userId={userId} work={labNumber} isInQueue={isInQueue} />
          }
         }
       })}
