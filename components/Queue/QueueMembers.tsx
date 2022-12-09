@@ -15,14 +15,19 @@ const additionalEmptyMembers = () => {
   return emptyMembers;
 }
 
-export const QueueMembers = ({queueId, participantId}) => {
+interface QueueMembersProps {
+  queueId: string;
+  participantId: string;
+  maxRecordNumber: number;
+}
+export const QueueMembers = ({queueId, participantId, maxRecordNumber}: QueueMembersProps) => {
   const { user } = useContext(LayoutContext);
   const {data, refetch} = useQuery({queryKey: ['records', queueId], queryFn: () => getRecords(queueId) });
 
   const membersList = useMemo(() => {
     const members = [];
 
-    if (data?.length) {
+    if (data) {
       // put records in members list
       for (const record of data) {
         members[record.index] = record;
@@ -30,7 +35,8 @@ export const QueueMembers = ({queueId, participantId}) => {
 
       // fill empty places with additional empty members
       const lastElement = members[members.length - 1];
-      for (let i = 0; i < lastElement.index; i++) {
+      const lastElementIndex = maxRecordNumber ? maxRecordNumber : lastElement?.index;
+      for (let i = 0; i < lastElementIndex; i++) {
         if (!members[i]) {
           members[i] = {
             id: `empty-${i}`,
@@ -40,8 +46,11 @@ export const QueueMembers = ({queueId, participantId}) => {
       }
     }
 
-   return [...members, ...additionalEmptyMembers()];
-  }, [data]);
+    if (!maxRecordNumber) {
+      members.push(...additionalEmptyMembers());
+    }
+    return members;
+  }, [data, maxRecordNumber]);
 
   const isInQueue = useMemo(() => {
     if (data) {

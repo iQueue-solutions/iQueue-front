@@ -87,13 +87,13 @@ const Id = ({ queueId }) => {
       <QueueInfo queueData={queueData} creator={creator} isParticipant={isParticipant} isAdmin={isAdmin} />
      </div>
      <div className="basis-3/5">
-      <QueueMembers queueId={queueId} participantId={participantId} />
+      <QueueMembers queueId={queueId} participantId={participantId} maxRecordNumber={queueData?.maxRecordNumber} />
      </div>
      <div className="basis-1/5 px-10"></div>
     </div>
     <div className="md:hidden">
      <QueueInfo queueData={queueData} creator={creator} isParticipant={isParticipant} isAdmin={isAdmin} />
-     <QueueMembers  queueId={queueId} participantId={participantId} />
+     <QueueMembers queueId={queueId} participantId={participantId} maxRecordNumber={queueData?.maxRecordNumber} />
     </div>
    </div>
   </div>
