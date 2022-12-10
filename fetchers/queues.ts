@@ -79,3 +79,10 @@ export const closeQueue = async ({id, userId} : closeQueueArgs): Promise<string>
   })
     .then(_ => `queue ${id} closed`)
 }
+
+export const removeQueue = async ({id}: {id: string}): Promise<string> => {
+  return fetch(`${API_URL}/queues/${id}`, {
+    method: "DELETE",
+  })
+    .then(_ => `queue ${id} deleted`)
+}

@@ -2,8 +2,9 @@ import { CheckIcon, XIcon } from "@heroicons/react/outline";
 import {DateInput} from "../Input";
 import {useState} from "react";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {closeQueue, getQueue, openQueue} from "../../fetchers/queues";
+import {closeQueue, getQueue, openQueue, removeQueue} from "../../fetchers/queues";
 import {getUser} from "../../fetchers/users";
+import {useRouter} from "next/router";
 
 interface ConfirmBoxProps {
   question: string;
@@ -110,6 +111,30 @@ export const ConfirmQueueCloseBox = ({ queueName, queueId, hideConfirm }: Confir
         () => mutation.mutate({
           id: queueData.id,
           userId: adminData.id,
+        })
+      }
+      onCancel={hideConfirm}
+    />
+  );
+};
+
+export const ConfirmQueueDeleteBox = ({ queueName, queueId, hideConfirm }: ConfirmQueueCloseBoxProps) => {
+  const router = useRouter();
+
+  const mutation = useMutation({
+    mutationFn: removeQueue,
+    onSuccess: () => {
+      hideConfirm();
+      router.push('/');
+    },
+  })
+
+  return (
+    <ConfirmBox
+      question={`Видалити чергу "${queueName}"?`}
+      onConfirm={
+        () => mutation.mutate({
+          id: queueId,
         })
       }
       onCancel={hideConfirm}

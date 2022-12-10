@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/outline";
 import {useEffect, useState} from "react";
 import {AddToQueue} from "../Confirm/AddToQueue";
-import {ConfirmQueueOpenBox, ConfirmQueueCloseBox} from "../Confirm/ConfirmBox";
+import {ConfirmQueueOpenBox, ConfirmQueueCloseBox, ConfirmQueueDeleteBox} from "../Confirm/ConfirmBox";
 import {Queue} from "../../fetchers/queues";
 import {DateToQueueDate} from "../../utils";
 import {useFlag} from "../../utils/useFlag";
@@ -66,6 +66,7 @@ interface QueueInfoProps {
 }
 export const QueueInfo = ({queueData, creator, isParticipant, isAdmin}: QueueInfoProps) => {
   const [isAddToQueue, showAddPeople, hideAddPeople] = useFlag();
+  const [isDeleteQueue, showDeleteQueue, hideDeleteQueue] = useFlag();
   const [isShowConfirmOpenQueue, showConfirmOpenQueue, hideConfirmOpenQueue] = useFlag();
   const [isShowConfirmCloseQueue, showConfirmCloseQueue, hideConfirmCloseQueue] = useFlag();
 
@@ -98,7 +99,8 @@ export const QueueInfo = ({queueData, creator, isParticipant, isAdmin}: QueueInf
               }
           </>
         }
-        <QueueOptionsBtn Icon={TrashIcon}>Видалити</QueueOptionsBtn>
+        <QueueOptionsBtn Icon={TrashIcon} onClick={showDeleteQueue}>Видалити</QueueOptionsBtn>
+        {isDeleteQueue && <ConfirmQueueDeleteBox queueName={queueData.name} queueId={queueData.id} hideConfirm={hideDeleteQueue} />}
       </>}
     </div>
      {isAddToQueue && <AddToQueue queueId={queueData.id} onClose={hideAddPeople} />}
