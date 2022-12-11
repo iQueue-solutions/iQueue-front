@@ -6,6 +6,9 @@
   .orange {
     @apply bg-amber-500 border-amber-500 hover:text-amber-500 text-amber-500 hover:bg-amber-500;
   }
+  .green {
+    @apply bg-green-500 border-green-500 hover:text-green-500 text-green-500 hover:bg-green-500;
+  }
   .purple {
     @apply bg-purple-800 border-purple-800 hover:text-purple-800 text-purple-800 hover:bg-purple-800;
   }

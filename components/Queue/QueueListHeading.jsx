@@ -1,4 +1,4 @@
-import { Heading } from "./Heading";
+import { Heading } from "../Heading";
 import { ShareQueue } from "./ShareQueue";
 import { QueueCreator } from "./QueueInfo";
 
