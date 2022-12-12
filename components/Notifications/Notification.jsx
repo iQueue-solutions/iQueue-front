@@ -10,7 +10,7 @@ export const Notification = ({from, to, user, queueName}) => {
         <ArrowRightIcon className='w-8 mx-2' />
         {to}
       </div>
-      <div className='flex text-xl text-slate-500 mt-1 flex-wrap'>
+      <div className='flex text-lg text-slate-500 mt-1 flex-wrap'>
         Від <span className='font-bold mx-2 text-slate-900'>{user}</span> у <span className='font-bold mx-2 text-slate-900'>{queueName}</span>
       </div>
       </div>

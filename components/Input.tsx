@@ -10,7 +10,7 @@ interface InputProps {
 }
 export const Input = ({isIcon, placeholder, handleInput, value, min, type="text"} : InputProps ) => {
   return (<div
-    className={`border-2 border-purple-800 p-2 rounded-lg ${isIcon ? "mb-6 flex" : "mb-10"}`}
+    className={`border-2 bg-white border-purple-800 p-2 rounded-lg ${isIcon ? "mb-6 flex" : "mb-10"}`}
   >
     <input
       value={value}
@@ -18,7 +18,7 @@ export const Input = ({isIcon, placeholder, handleInput, value, min, type="text"
       onInput={e => handleInput((e.target as HTMLInputElement).value)}
       placeholder={placeholder}
       min={min}
-      className="bg-transparent focus:outline-none w-full"
+      className="bg-transparent focus:outline-none w-ful"
     />
   </div>);
 };

@@ -5,7 +5,7 @@ import {Button} from '../components/Button'
 
 const registration = () => {
   return (
-    <div className="w-full flex flex-col items-center md:items-center justify-center">
+    <div className="w-[90%] ml-[50%] translate-x-[-50%] py-5 md:py-0 mb-5 md:mb-0 flex flex-col items-center md:items-center justify-center bg-blue-300 md:bg-transparent rounded-lg">
    <CreateQueueHeading>
     Реєстрація
    </CreateQueueHeading>
@@ -21,12 +21,13 @@ const registration = () => {
        </div>
      </form>
     <Button
-     color="green"
+     color="purple"
      variant="solid"
     >
      Реєстрація
     </Button>
    </div>
+   <div className='text-md text-purple-800 mt-2'>Вже реєструвалися? <span className='underline hover:decoration-dashed cursor-pointer'>Увійдіть</span></div>
   </div>
   )
 }
