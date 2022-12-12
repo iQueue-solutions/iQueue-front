@@ -3,6 +3,7 @@ import {useContext} from "react";
 import {LayoutContext} from "../components/Layout/Layout";
 import {dehydrate, QueryClient, useQuery} from "@tanstack/react-query";
 import {getUsers} from "../fetchers/users";
+import { Heading } from "../components/Heading";
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
@@ -21,9 +22,7 @@ const Profile = () => {
   const {data} = useQuery({queryKey: ['users'], queryFn: getUsers});
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-4xl md:text-8xl md:lowercase font-semibold md:font-light text-purple-800 mb-9">
-        Профіль
-      </h1>
+      <Heading>Профіль</Heading>
       <div className="flex flex-col items-start">
       {data.map((user, index) => (
         <div key={user.id} className="mb-2 text-xl font-semibold flex">

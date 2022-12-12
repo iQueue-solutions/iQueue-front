@@ -31,8 +31,8 @@ export const Navbar = () => {
     <NavLinkMobile
      icon={<Swap width="w-7" />}
      text="запити"
-     isActive={router.pathname === "/queue/new"}
-     href="/queue/new"
+     isActive={router.pathname === "/notifications"}
+     href="/notifications"
     />
     <NavLinkMobile
      icon={<UserCircleIcon className="w-7" />}
@@ -60,8 +60,8 @@ export const Navbar = () => {
       <NavLinkPC
        icon={<Swap width="w-9" />}
        text="запити"
-       isActive={router.pathname === "/queue/new"}
-       href="/queue/new"
+       isActive={router.pathname === "/notifications"}
+       href="/notifications"
       />
      </div>
      <NavLinkPC
