@@ -5,20 +5,16 @@ import {Button} from '../components/Button'
 
 const registration = () => {
   return (
-    <div className="w-[90%] ml-[50%] translate-x-[-50%] py-5 md:py-0 mb-5 md:mb-0 flex flex-col items-center md:items-center justify-center bg-blue-300 md:bg-transparent rounded-lg">
+    <div className="w-[90%] md:w-[70%] mx-auto py-5 md:pt-0 mb-5 md:mb-0 md:mt-5 flex flex-col items-center justify-center bg-blue-300 rounded-lg">
    <CreateQueueHeading>
     Реєстрація
    </CreateQueueHeading>
-   <div className="flex flex-col w-10/12 md:w-2/3">
-     <form className="mt-9 justify-between flex flex-col md:flex-row">
-      <div className='flex flex-col md:w-[45%]'>
+   <div className="flex flex-col w-10/12 md:w-1/2">
+     <form className="mt-9 justify-between flex flex-col">
         <Input placeholder="Email" />
         <Input placeholder="Ваше ім'я" />
-       </div>
-       <div className='flex flex-col md:w-[45%]'>
         <Input type="password" placeholder="Придумайте пароль" />
         <Input type="password" placeholder="Повторіть пароль" />
-       </div>
      </form>
     <Button
      color="purple"
