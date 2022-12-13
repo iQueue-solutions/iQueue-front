@@ -1,0 +1,15 @@
+@tailwind components;
+
+@layer components {
+  .show {
+    display: none;
+  }
+  .profile:hover > .show {
+    display: block;
+    transition: .7s;
+  }
+  .profile:hover > img {
+    opacity: 0.5;
+    transition: .7s;
+  }
+}

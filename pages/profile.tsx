@@ -1,4 +1,3 @@
-import { CheckIcon } from "@heroicons/react/outline";
 import {useContext} from "react";
 import {LayoutContext} from "../components/Layout/Layout";
 import {dehydrate, QueryClient, useQuery} from "@tanstack/react-query";
