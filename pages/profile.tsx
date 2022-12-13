@@ -4,6 +4,7 @@ import {LayoutContext} from "../components/Layout/Layout";
 import {dehydrate, QueryClient, useQuery} from "@tanstack/react-query";
 import {getUsers} from "../fetchers/users";
 import { Heading } from "../components/Heading";
+import {ProfileImage} from "../components/Profile/ProfileImage"
 
 export async function getServerSideProps() {
   const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const Profile = () => {
 
   const {data} = useQuery({queryKey: ['users'], queryFn: getUsers});
   return (
+    <>
     <div className="flex flex-col items-center">
       <Heading>Профіль</Heading>
       <div className="flex flex-col items-start">
@@ -44,6 +46,10 @@ const Profile = () => {
         }
       </div>
     </div>
+    <div className="flex flex-col mx-auto w-10/12 md:w-1/3 items-center mt-3">
+      <ProfileImage img={`https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png`} />
+    </div>
+    </>
   );
 }
 
