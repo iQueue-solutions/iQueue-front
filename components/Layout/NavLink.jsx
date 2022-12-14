@@ -5,7 +5,7 @@ export const NavLinkPC = ({ icon, text, isActive, href='#' }) => {
     <Link href={isActive ? "#" : href}>
       <a className={`flex mx-7 ${isActive ? 'text-purple-800' : 'justify-center text-slate-900 hover:text-purple-800'}`}>
         {icon}
-        <div className={`text-2xl ${!isActive && 'ml-1'}`}>{text}</div>
+        <div className="text-2xl ml-1">{text}</div>
       </a>
     </Link>
   );
