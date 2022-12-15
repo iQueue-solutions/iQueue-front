@@ -50,11 +50,7 @@ interface closeQueueArgs {
   userId: string;
 }
 
-interface openQueueArgs extends closeQueueArgs {
-  openTime: string;
-}
-
-export const openQueue = async ({id, userId, openTime} : openQueueArgs): Promise<string> => {
+export const openQueue = async ({id, userId} : closeQueueArgs): Promise<string> => {
   return fetchWithAuth(`${API_URL}/queues/${id}/open`, {
     method: "PUT",
     headers: {
@@ -62,7 +58,6 @@ export const openQueue = async ({id, userId, openTime} : openQueueArgs): Promise
     },
     body: JSON.stringify({
       userId,
-      closeTime: new Date(openTime).toISOString(),
     }),
   })
     .then(_ => `queue ${id} opened`)

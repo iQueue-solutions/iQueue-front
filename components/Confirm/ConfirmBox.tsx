@@ -1,6 +1,5 @@
 import { CheckIcon, XIcon } from "@heroicons/react/outline";
 import {DateInput} from "../Input";
-import {useState} from "react";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {closeQueue, getQueue, openQueue, removeQueue} from "../../fetchers/queues";
 import {getUser} from "../../fetchers/users";
@@ -40,13 +39,6 @@ interface ConfirmQueueOpenBoxProps {
   hideConfirm: () => void;
 }
 export const ConfirmQueueOpenBox = ({ queueName, queueId, hideConfirm }: ConfirmQueueOpenBoxProps) => {
-  const getInitialDate = () => {
-    const date = new Date();
-    date.setDate(date.getDate() + 1);
-    return date;
-  }
-  const [time, setTime] = useState('');
-
   const {data: queueData, refetch} = useQuery({queryKey: ['queues', queueId], queryFn: () => getQueue(queueId)});
   const {data: adminData} = useQuery({
     queryKey: ['users', queueData.adminId],
@@ -69,16 +61,9 @@ export const ConfirmQueueOpenBox = ({ queueName, queueId, hideConfirm }: Confirm
         () => mutation.mutate({
           id: queueData.id,
           userId: adminData.id,
-          openTime: time,
         })
       }
       onCancel={hideConfirm}
-      withDateInput
-      dateInputProps={{
-        title: "Кінець запису в чергу",
-        initialDate: getInitialDate(),
-        setTime: setTime,
-      }}
       />
   );
 };
