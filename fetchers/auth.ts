@@ -4,7 +4,7 @@ interface loginArgs {
   email: string,
   password: string,
 }
-export const login = ({email, password}: loginArgs): Promise<string> => {
+export const login = ({email, password}: loginArgs): Promise<Response> => {
   return fetch(`${API_URL}/auth/login`, {
     method: 'POST',
     headers: {
@@ -12,7 +12,6 @@ export const login = ({email, password}: loginArgs): Promise<string> => {
     },
     body: JSON.stringify({email, password}),
   })
-    .then((response) => response.json())
 }
 
 interface registerArgs extends loginArgs {

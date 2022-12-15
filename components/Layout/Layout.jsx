@@ -8,7 +8,7 @@ import Head from "next/head";
 export const LayoutContext = React.createContext(undefined);
 
 export default function Layout({ children }) {
-  const [localUser, setLocalUser] = useLocalStorage("user", {});
+  const [localUser, setLocalUser] = useLocalStorage("iQueue-user", {});
   const [user, setUser] = useState({});
 
   // fix for hydration error
