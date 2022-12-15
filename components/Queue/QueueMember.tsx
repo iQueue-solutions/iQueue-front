@@ -57,6 +57,7 @@ const OccupiedPlace = ({
               onClick={openQuestion}
               className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition"
             >
+              {/* @ts-ignore*/}
               {isMe ? <XIcon className="w-6" /> : <Swap />}
             </button>
           )}
@@ -83,6 +84,7 @@ export const MyPlace = ({ index, userId, recordId, work, refetchRecords }) => {
 
 export const StrangerPlace = ({ index, userId, work, isInQueue }) => {
   return (
+    // @ts-ignore
     <OccupiedPlace {...{ index, userId, work }} variant={{ isMe: false, isInQueue }} />
   );
 }

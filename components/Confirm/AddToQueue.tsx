@@ -64,11 +64,11 @@ export const AddToQueue = ({ queueId, onClose }) => {
 
   function onSubmit() {
     const participants = [];
-    for (const [userId, isChecked] of usersMap) {
+    usersMap.forEach((isChecked, userId ) => {
       if (isChecked) {
         participants.push(userId);
       }
-    }
+    })
     mutation.mutate({
       queueId,
       userIds: participants

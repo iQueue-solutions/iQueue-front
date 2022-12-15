@@ -49,7 +49,12 @@ export const QueueTime = ({startDate, endDate}) => {
   );
 };
 
-export const QueueOptionsBtn = ({ Icon, onClick, children }) => {
+interface QueueOptionsBtnArgs {
+  Icon: any;
+  onClick: () => void;
+  children: string;
+}
+export const QueueOptionsBtn = ({ Icon, onClick, children }: QueueOptionsBtnArgs) => {
   return (
     <div className="flex md:bg-slate-200 p-2 rounded-2xl md:hover:bg-slate-300 mb-1" onClick={onClick}>
       <Icon className="w-6 md:w-7 hover:text-purple-500" />
@@ -70,36 +75,45 @@ export const QueueInfo = ({queueData, creator, isParticipant, isAdmin}: QueueInf
   const [isShowConfirmOpenQueue, showConfirmOpenQueue, hideConfirmOpenQueue] = useFlag();
   const [isShowConfirmCloseQueue, showConfirmCloseQueue, hideConfirmCloseQueue] = useFlag();
 
- return (
+  return (
    <div className="flex flex-col md:w-full font-semibold md:mt-2 mb-7 cursor-pointer items-center">
     <div className="flex md:flex-col justify-between w-full">
       <QueueCreator Icon={ShieldExclamationIcon}>{creator}</QueueCreator>
       <QueueTime startDate={queueData.openTime} endDate={queueData.closeTime} />
     </div>
     <div className="text-purple-800 flex md:flex-col md:w-full">
-      <QueueOptionsBtn Icon={ShareIcon}>Поділитися</QueueOptionsBtn>
+      <QueueOptionsBtn Icon={ShareIcon} onClick={() => {console.log('share')}}>Поділитися</QueueOptionsBtn>
       {isParticipant &&
+        // @ts-ignore
         <QueueOptionsBtn Icon={ArrowCircleLeftIcon}>Вийти</QueueOptionsBtn>
       }
       {isAdmin && <>
         <hr className="my-4 mx-auto w-40 h-1 bg-gray-200 sm:hidden md:block" />
+        {/* @ts-ignore*/}
         <QueueOptionsBtn Icon={UserAddIcon} onClick={showAddPeople}>Додати</QueueOptionsBtn>
+        {/* @ts-ignore*/}
         <QueueOptionsBtn Icon={CogIcon}>Налаштування</QueueOptionsBtn>
         {queueData.isOpen
           ? <>
+            {/* @ts-ignore*/}
              <QueueOptionsBtn Icon={LockOpenIcon} onClick={showConfirmCloseQueue}>Заблокувати</QueueOptionsBtn>
               {isShowConfirmCloseQueue &&
+                // @ts-ignore
                 <ConfirmQueueCloseBox queueName={queueData.name} queueId={queueData.id} hideConfirm={hideConfirmCloseQueue} />
               }
           </>
           : <>
+            {/* @ts-ignore*/}
              <QueueOptionsBtn Icon={LockClosedIcon} onClick={showConfirmOpenQueue}>Розблокувати</QueueOptionsBtn>
               {isShowConfirmOpenQueue &&
+                // @ts-ignore
                 <ConfirmQueueOpenBox queueName={queueData.name} queueId={queueData.id} hideConfirm={hideConfirmOpenQueue} />
               }
           </>
         }
+        {/* @ts-ignore*/}
         <QueueOptionsBtn Icon={TrashIcon} onClick={showDeleteQueue}>Видалити</QueueOptionsBtn>
+        {/* @ts-ignore*/}
         {isDeleteQueue && <ConfirmQueueDeleteBox queueName={queueData.name} queueId={queueData.id} hideConfirm={hideDeleteQueue} />}
       </>}
     </div>
