@@ -1,5 +1,6 @@
 import {API_URL} from "../constants";
 import {User} from "./users";
+import {fetchWithAuth} from "./fetchWithAuth";
 
 export type Participant = {
   id: string;
@@ -8,7 +9,7 @@ export type Participant = {
 }
 
 export const createParticipant = ({queueId, userId}): Promise<string> => {
-  return fetch(`${API_URL}/participants`, {
+  return fetchWithAuth(`${API_URL}/participants`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -26,7 +27,7 @@ interface createParticipantsArgs {
   userIds: User[],
 }
 export const createParticipants = ({queueId, userIds}: createParticipantsArgs): Promise<string> => {
-  return fetch(`${API_URL}/participants/collection?queueId=${queueId}`, {
+  return fetchWithAuth(`${API_URL}/participants/collection?queueId=${queueId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

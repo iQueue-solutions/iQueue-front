@@ -1,11 +1,12 @@
 import {API_URL} from "../constants";
+import {fetchWithAuth} from "./fetchWithAuth";
 
 interface loginArgs {
   email: string,
   password: string,
 }
 export const login = ({email, password}: loginArgs): Promise<Response> => {
-  return fetch(`${API_URL}/auth/login`, {
+  return fetchWithAuth(`${API_URL}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -19,7 +20,7 @@ interface registerArgs extends loginArgs {
   lastName: string,
 }
 export const register = ({email, password, firstName, lastName}: registerArgs): Promise<string> => {
-  return fetch(`${API_URL}/auth/register`, {
+  return fetchWithAuth(`${API_URL}/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

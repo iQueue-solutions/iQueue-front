@@ -1,5 +1,6 @@
 import {API_URL} from "../constants";
 import {Participant} from "./participants";
+import {fetchWithAuth} from "./fetchWithAuth";
 
 export type Queue = {
   id: string;
@@ -27,7 +28,7 @@ export const createQueue = async ({name, adminId, openTime, closeTime, maxRecord
 : {name: string, adminId: string, openTime: string, closeTime: string, maxRecordNumber: number  }
 ): Promise<string> => {
   console.log("createQueueM args", {name, adminId, openTime, closeTime, maxRecordNumber})
-  return fetch(`${API_URL}/queues`, {
+  return fetchWithAuth(`${API_URL}/queues`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -54,7 +55,7 @@ interface openQueueArgs extends closeQueueArgs {
 }
 
 export const openQueue = async ({id, userId, openTime} : openQueueArgs): Promise<string> => {
-  return fetch(`${API_URL}/queues/${id}/open`, {
+  return fetchWithAuth(`${API_URL}/queues/${id}/open`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -68,7 +69,7 @@ export const openQueue = async ({id, userId, openTime} : openQueueArgs): Promise
 }
 
 export const closeQueue = async ({id, userId} : closeQueueArgs): Promise<string> => {
-  return fetch(`${API_URL}/queues/${id}/close`, {
+  return fetchWithAuth(`${API_URL}/queues/${id}/close`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -81,7 +82,7 @@ export const closeQueue = async ({id, userId} : closeQueueArgs): Promise<string>
 }
 
 export const removeQueue = async ({id}: {id: string}): Promise<string> => {
-  return fetch(`${API_URL}/queues/${id}`, {
+  return fetchWithAuth(`${API_URL}/queues/${id}`, {
     method: "DELETE",
   })
     .then(_ => `queue ${id} deleted`)

@@ -1,4 +1,5 @@
 import {API_URL} from "../constants";
+import {fetchWithAuth} from "./fetchWithAuth";
 
 export type Record = {
   id: string;
@@ -20,7 +21,7 @@ interface createRecordParams {
   labNumber?: string;
 }
 export const createRecord = ({index, participantId, labNumber=''}: createRecordParams): Promise<String> => {
-  return fetch(`${API_URL}/records`, {
+  return fetchWithAuth(`${API_URL}/records`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -35,7 +36,7 @@ export const createRecord = ({index, participantId, labNumber=''}: createRecordP
 }
 
 export const removeRecord = ({recordId}): Promise<String> => {
-  return fetch(`${API_URL}/records/${recordId}`, {
+  return fetchWithAuth(`${API_URL}/records/${recordId}`, {
     method: 'DELETE',
   })
     .then(_ => 'ok')
