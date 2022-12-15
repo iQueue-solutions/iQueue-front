@@ -1,1 +1,1 @@
-export const API_URL = 'http://iqueue-001-site1.ctempurl.com/api';
+export const API_URL = 'https://iqueue-api.azurewebsites.net/api';
