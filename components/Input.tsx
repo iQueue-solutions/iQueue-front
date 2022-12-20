@@ -18,7 +18,7 @@ export const Input = ({isIcon, placeholder, handleInput, value, min, type="text"
       onInput={e => handleInput((e.target as HTMLInputElement).value)}
       placeholder={placeholder}
       min={min}
-      className="bg-transparent focus:outline-none w-ful"
+      className="bg-transparent focus:outline-none w-full"
     />
   </div>);
 };
