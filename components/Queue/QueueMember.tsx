@@ -55,24 +55,28 @@ const OccupiedPlace = ({
             <>
               {/* @ts-ignore*/}
               {isMe ? 
-              
+              <Tooltip title="Вийти">
               <button 
               onClick={() => {openQuestion(); setQuestion("Залишити чергу?");}} 
               className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition">
                 <XIcon className="w-6" />
               </button> 
-              :
+              </Tooltip>:
               <div className="flex">
+                <Tooltip title="Змінитися">
                 <button 
                 onClick={() => {openQuestion(); setQuestion(`Помінятись з ${userData?.firstName}?`);}} 
                 className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition">
                   <Swap /> 
                 </button> 
+                </Tooltip>
+                <Tooltip title="Передати чергу">
                 <button 
                 onClick={() => {openQuestion(); setQuestion(`Передати чергу ${userData?.firstName}?`);}} 
                 className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition">
                   <FireIcon className="w-6" />
                 </button> 
+                </Tooltip>
               </div>
                 }
             </>
