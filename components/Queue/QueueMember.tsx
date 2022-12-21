@@ -1,4 +1,4 @@
-import { XIcon, PlusIcon, FireIcon } from "@heroicons/react/outline";
+import { XIcon, PlusIcon } from "@heroicons/react/outline";
 import { Swap } from "../Icons";
 import { useState } from "react";
 import { ConfirmQueueMember } from "../Confirm/ConfirmQueueMember";
@@ -20,7 +20,9 @@ const OccupiedPlace = ({
   });
 
   const [isQuestion, setIsQuestion] = useState(false);
-  const [question, setQuestion] = useState("Залишити чергу?");
+  const [question] = useState(
+    isMe ? "Залишити чергу?" : `Помінятись з ${userData?.firstName}?`
+);
 
   const openQuestion = () => setIsQuestion(true);
   const closeQuestion = () => setIsQuestion(false);
@@ -52,34 +54,15 @@ const OccupiedPlace = ({
         <div className="flex">
           <h2 className="text-xl">{work}</h2>
           {isInQueue && (
-            <>
+            <Tooltip title={isMe ? "Вийти" : "Запрос на зміну"}>
+            <button
+              onClick={openQuestion}
+              className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition"
+            >
               {/* @ts-ignore*/}
-              {isMe ? 
-              <Tooltip title="Вийти">
-              <button 
-              onClick={() => {openQuestion(); setQuestion("Залишити чергу?");}} 
-              className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition">
-                <XIcon className="w-6" />
-              </button> 
-              </Tooltip>:
-              <div className="flex">
-                <Tooltip title="Змінитися">
-                <button 
-                onClick={() => {openQuestion(); setQuestion(`Помінятись з ${userData?.firstName}?`);}} 
-                className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition">
-                  <Swap /> 
-                </button> 
-                </Tooltip>
-                <Tooltip title="Передати чергу">
-                <button 
-                onClick={() => {openQuestion(); setQuestion(`Передати чергу ${userData?.firstName}?`);}} 
-                className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition">
-                  <FireIcon className="w-6" />
-                </button> 
-                </Tooltip>
-              </div>
-                }
-            </>
+              {isMe ? <XIcon className="w-6" /> : <Swap />}
+            </button>
+            </Tooltip>
           )}
         </div>
       </div>
