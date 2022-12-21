@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../styles/Button.module.css";
 
 interface ButtonProps {
-  color: 'orange' | 'purple' | 'red';
+  color: 'orange' | 'purple' | 'red' | 'green';
   variant: 'solid' | 'outline';
   onClick?: () => void;
   icon?: React.ReactNode;
