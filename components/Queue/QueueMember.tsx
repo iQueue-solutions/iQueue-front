@@ -1,10 +1,11 @@
-import { XIcon, PlusIcon } from "@heroicons/react/outline";
+import { XIcon, PlusIcon, FireIcon } from "@heroicons/react/outline";
 import { Swap } from "../Icons";
 import { useState } from "react";
 import { ConfirmQueueMember } from "../Confirm/ConfirmQueueMember";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {getUser} from "../../fetchers/users";
 import {createRecord, removeRecord} from "../../fetchers/records";
+import Tooltip from '@mui/material/Tooltip';
 
 const OccupiedPlace = ({
                                 index,
@@ -19,9 +20,7 @@ const OccupiedPlace = ({
   });
 
   const [isQuestion, setIsQuestion] = useState(false);
-  const [question] = useState(
-    isMe ? "Залишити чергу?" : `Помінятись з ${userData?.firstName}?`
-);
+  const [question, setQuestion] = useState("Залишити чергу?");
 
   const openQuestion = () => setIsQuestion(true);
   const closeQuestion = () => setIsQuestion(false);
@@ -53,13 +52,30 @@ const OccupiedPlace = ({
         <div className="flex">
           <h2 className="text-xl">{work}</h2>
           {isInQueue && (
-            <button
-              onClick={openQuestion}
-              className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition"
-            >
+            <>
               {/* @ts-ignore*/}
-              {isMe ? <XIcon className="w-6" /> : <Swap />}
-            </button>
+              {isMe ? 
+              
+              <button 
+              onClick={() => {openQuestion(); setQuestion("Залишити чергу?");}} 
+              className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition">
+                <XIcon className="w-6" />
+              </button> 
+              :
+              <div className="flex">
+                <button 
+                onClick={() => {openQuestion(); setQuestion(`Помінятись з ${userData?.firstName}?`);}} 
+                className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition">
+                  <Swap /> 
+                </button> 
+                <button 
+                onClick={() => {openQuestion(); setQuestion(`Передати чергу ${userData?.firstName}?`);}} 
+                className="bg-blue-200 rounded-md h-9 px-1.5 ml-3 mt-[-5px] hover:bg-blue-300 transition">
+                  <FireIcon className="w-6" />
+                </button> 
+              </div>
+                }
+            </>
           )}
         </div>
       </div>
