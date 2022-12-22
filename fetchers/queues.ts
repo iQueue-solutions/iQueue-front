@@ -82,3 +82,23 @@ export const removeQueue = async ({id}: {id: string}): Promise<string> => {
   })
     .then(_ => `queue ${id} deleted`)
 }
+
+export const changeAdmin = async ({queueId, userId}: {queueId: string, userId: string}): Promise<string> => {
+  return fetchWithAuth(`${API_URL}/queues/${queueId}/admin-status`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(
+      userId,
+    ),
+  })
+    .then(async res => {
+      if (res.ok) {
+        return `queue ${queueId} admin changed to ${userId}`
+      } else {
+        const text = await res.text()
+        throw new Error(`queue ${queueId} admin change failed with status ${res.status} (${res.statusText}): ${text}`)
+      }
+    })
+}

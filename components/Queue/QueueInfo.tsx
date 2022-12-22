@@ -1,12 +1,17 @@
 import {
-  UserAddIcon, TrashIcon,
+  UserAddIcon, UsersIcon, TrashIcon,
   CogIcon,
   ShareIcon, ShieldExclamationIcon, ClockIcon,
   LockOpenIcon, LockClosedIcon, ArrowCircleLeftIcon
 } from "@heroicons/react/outline";
 import {useEffect, useState} from "react";
 import {AddToQueue} from "../Confirm/AddToQueue";
-import {ConfirmQueueOpenBox, ConfirmQueueCloseBox, ConfirmQueueDeleteBox} from "../Confirm/ConfirmBox";
+import {
+  ConfirmQueueOpenBox,
+  ConfirmQueueCloseBox,
+  ConfirmQueueDeleteBox,
+  ConfirmChangeAdminBox
+} from "../Confirm/ConfirmBox";
 import {Queue} from "../../fetchers/queues";
 import {DateToQueueDate} from "../../utils";
 import {useFlag} from "../../utils/useFlag";
@@ -72,6 +77,7 @@ interface QueueInfoProps {
 export const QueueInfo = ({queueData, creator, isParticipant, isAdmin}: QueueInfoProps) => {
   const [isAddToQueue, showAddPeople, hideAddPeople] = useFlag();
   const [isDeleteQueue, showDeleteQueue, hideDeleteQueue] = useFlag();
+  const [isChangeAdmin, showChangeAdmin, hideChangeAdmin] = useFlag();
   const [isShowConfirmOpenQueue, showConfirmOpenQueue, hideConfirmOpenQueue] = useFlag();
   const [isShowConfirmCloseQueue, showConfirmCloseQueue, hideConfirmCloseQueue] = useFlag();
 
@@ -90,7 +96,7 @@ export const QueueInfo = ({queueData, creator, isParticipant, isAdmin}: QueueInf
       {isAdmin && <>
         <hr className="my-4 mx-auto w-40 h-1 bg-gray-200 sm:hidden md:block" />
         {/* @ts-ignore*/}
-        <QueueOptionsBtn Icon={UserAddIcon} onClick={showAddPeople}>Додати</QueueOptionsBtn>
+        <QueueOptionsBtn Icon={UserAddIcon} onClick={showAddPeople}>Додати учасника</QueueOptionsBtn>
         {/* @ts-ignore*/}
         <QueueOptionsBtn Icon={CogIcon}>Налаштування</QueueOptionsBtn>
         {queueData.isOpen
@@ -111,6 +117,10 @@ export const QueueInfo = ({queueData, creator, isParticipant, isAdmin}: QueueInf
               }
           </>
         }
+        {/* @ts-ignore*/}
+        <QueueOptionsBtn Icon={UsersIcon} onClick={showChangeAdmin}>Змінити адміністратора</QueueOptionsBtn>
+        {/* @ts-ignore*/}
+        {isChangeAdmin && <ConfirmChangeAdminBox queueName={queueData.name} queueId={queueData.id} hideConfirm={hideChangeAdmin} />}
         {/* @ts-ignore*/}
         <QueueOptionsBtn Icon={TrashIcon} onClick={showDeleteQueue}>Видалити</QueueOptionsBtn>
         {/* @ts-ignore*/}

@@ -1,9 +1,11 @@
-import { CheckIcon, XIcon } from "@heroicons/react/outline";
+import {CheckIcon, PlusCircleIcon, XIcon} from "@heroicons/react/outline";
 import {DateInput} from "../Input";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import {closeQueue, getQueue, openQueue, removeQueue} from "../../fetchers/queues";
-import {getUser} from "../../fetchers/users";
+import {closeQueue, getQueue, openQueue, removeQueue, changeAdmin} from "../../fetchers/queues";
+import {getUser, getUsers, User} from "../../fetchers/users";
 import {useRouter} from "next/router";
+import React, {useState} from "react";
+import {Button} from "../Button";
 
 interface ConfirmBoxProps {
   question: string;
@@ -124,5 +126,72 @@ export const ConfirmQueueDeleteBox = ({ queueName, queueId, hideConfirm }: Confi
       }
       onCancel={hideConfirm}
     />
+  );
+};
+
+const PreAdmin = ({ user, setSelectedUserId }: {
+  user: User,
+  setSelectedUserId: (id: string | null) => void,
+} ) => {
+  const [isChecked, setChecked] = useState(false);
+
+  function onChecked() {
+    setChecked(c => {
+      setSelectedUserId(!c ? user.id : "");
+      return !c;
+    });
+  }
+
+  return (
+    <div className="flex md:w-1/4">
+      <PlusCircleIcon className={`w-6 ${isChecked ? 'text-green-400 hover:text-green-600' : 'text-gray-400 hover:text-gray-600'}`} onClick={onChecked} />
+      <div className="pl-1 w-3/4 text-gray-700">{user.lastName} {user.firstName}</div>
+    </div>
+  )
+}
+
+export const ConfirmChangeAdminBox = ({ queueId, hideConfirm }: ConfirmQueueCloseBoxProps) => {
+  const {data: users} = useQuery({queryKey: ['users'], queryFn: getUsers});
+  const {data: queue, refetch: refetchQueue} = useQuery({queryKey: ['queues', queueId], queryFn: () => getQueue(queueId)});
+
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+
+  const mutation = useMutation({
+    mutationFn: changeAdmin,
+    onSuccess: async () => {
+      await refetchQueue();
+      hideConfirm();
+    },
+  })
+
+  const changeAdminCallback = () => mutation.mutate({
+    queueId: queue.id,
+    userId: selectedUserId,
+  })
+
+  return (
+  <div className="bg-blue-300 z-10 flex flex-col items-center fixed rounded-lg w-[330px] md:w-[1100px] h-[500px] md:h-[600px] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-55%] drop-shadow-2xl">
+    <XIcon
+      className="w-7 md:w-8 self-end text-slate-50 m-1 hover:text-purple-800"
+      onClick={hideConfirm}
+    />
+    <div className="bg-slate-50 w-[270px] md:w-[1000px] h-[400px] md:h-[450px] flex flex-col items-center px-5 md:mb-7">
+      <h1 className="text-2xl md:text-4xl font-bold pt-2 pb-1">
+        Передати права адміністратора черги?
+      </h1>
+      <h2 className="text-xl md:text-2xl text-gray-400 font-semibold pb-5">{queue?.name} {selectedUserId}</h2>
+      <div className="flex flex-col overflow-scroll overflow-x-hidden md:overflow-hidden w-full md:flex-wrap md:items-center">
+        {queue?.participants?.map((participant) => {
+          const user = users?.find((user) => user.id === participant.userId);
+
+          if (user)
+            return <PreAdmin user={user} key={`pre-admin-${user.id}`} setSelectedUserId={setSelectedUserId} />
+        })}
+      </div>
+    </div>
+    {selectedUserId &&
+      <Button color="purple" variant="solid" margin={2} onClick={changeAdminCallback}>Підтвердити</Button>
+    }
+  </div>
   );
 };
