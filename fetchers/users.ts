@@ -20,7 +20,13 @@ export const getUser = async (id: string): Promise<User> => {
     .then(response => response.json())
 }
 
-export const updateUser = async ({userId, firstName, lastName, email}): Promise<User> => {
+interface UpdateUserParams {
+  userId: string;
+  firstName: string,
+  lastName: string,
+  email: string,
+}
+export const updateUser = async ({userId, firstName, lastName, email}: UpdateUserParams): Promise<User> => {
   return fetchWithAuth(`${API_URL}/users/${userId}`, {
     method: 'PUT',
     headers: {
@@ -34,4 +40,31 @@ export const updateUser = async ({userId, firstName, lastName, email}): Promise<
     })
   })
     .then(response => response.json())
+}
+
+interface UpdatePasswordParams {
+  userId: string;
+  currentPassword: string;
+  newPassword: string;
+
+}
+export const updatePassword = async ({userId, currentPassword, newPassword}: UpdatePasswordParams): Promise<String> => {
+  return fetchWithAuth(`${API_URL}/users/${userId}/password`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      currentPassword,
+      newPassword
+    })
+  })
+    .then(async response => {
+      if (response.ok) {
+        return 'ok';
+      } else {
+        const text = await response.text();
+        throw new Error(`Error updating password: ${response.statusText}, ${text}`);
+      }
+    })
 }
